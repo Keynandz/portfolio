@@ -1,0 +1,70 @@
+import { NextResponse } from "next/server";
+
+const GITHUB_USER = "Keynandz";
+
+export async function GET() {
+  try {
+    const userRes = await fetch(`https://api.github.com/users/${GITHUB_USER}`);
+    if (!userRes.ok) {
+      return NextResponse.json({ error: "Failed to fetch user data" }, { status: 500 });
+    }
+    const userData = await userRes.json();
+    const joinDate = new Date(userData.created_at);
+    const joinYear = joinDate.getFullYear();
+    const joinMonth = joinDate.getMonth();
+    const currentYear = new Date().getFullYear();
+
+    const years: number[] = [];
+    for (let y = joinYear; y <= currentYear; y++) years.push(y);
+
+    const allContributions: { date: string; level: number }[] = [];
+    const yearTotals: Record<number, number> = {};
+
+    const fetches = years.map(async (year) => {
+      const from = year === joinYear
+        ? `${year}-${String(joinMonth + 1).padStart(2, "0")}-01`
+        : `${year}-01-01`;
+      const to = `${year}-12-31`;
+      const res = await fetch(
+        `https://github.com/users/${GITHUB_USER}/contributions?from=${from}&to=${to}`,
+        { headers: { "User-Agent": "Mozilla/5.0" } }
+      );
+      if (!res.ok) return;
+
+      const html = await res.text();
+
+      const contributions: { date: string; level: number }[] = [];
+      const tdRegex = /data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d)"/g;
+      let match;
+      while ((match = tdRegex.exec(html)) !== null) {
+        contributions.push({ date: match[1], level: parseInt(match[2]) });
+      }
+
+      const totalMatch = html.match(/([\d,]+)\s*contributions/i);
+      yearTotals[year] = totalMatch ? parseInt(totalMatch[1].replace(/,/g, "")) : 0;
+
+      return contributions;
+    });
+
+    const results = await Promise.all(fetches);
+    results.forEach((contribs) => {
+      if (contribs) allContributions.push(...contribs);
+    });
+
+    allContributions.sort((a, b) => a.date.localeCompare(b.date));
+
+    const firstActive = allContributions.findIndex((c) => c.level > 0);
+    const trimmed = firstActive > 0 ? allContributions.slice(firstActive) : allContributions;
+
+    return NextResponse.json({
+      username: GITHUB_USER,
+      joinYear,
+      currentYear,
+      years,
+      yearTotals,
+      contributions: trimmed,
+    });
+  } catch {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
