@@ -59,14 +59,14 @@ const categories = [
 ];
 
 const colorMap: Record<string, { bg: string; text: string; border: string; glow: string }> = {
-  teal: { bg: "bg-teal/10", text: "text-teal", border: "border-teal/20", glow: "group-hover:shadow-teal/10" },
-  emerald: { bg: "bg-emerald-500/10", text: "text-emerald-400", border: "border-emerald-500/20", glow: "group-hover:shadow-emerald-500/10" },
-  cyan: { bg: "bg-cyan-500/10", text: "text-cyan-400", border: "border-cyan-500/20", glow: "group-hover:shadow-cyan-500/10" },
-  orange: { bg: "bg-orange-500/10", text: "text-orange-400", border: "border-orange-500/20", glow: "group-hover:shadow-orange-500/10" },
-  purple: { bg: "bg-purple-500/10", text: "text-purple-400", border: "border-purple-500/20", glow: "group-hover:shadow-purple-500/10" },
-  blue: { bg: "bg-blue-500/10", text: "text-blue-400", border: "border-blue-500/20", glow: "group-hover:shadow-blue-500/10" },
-  pink: { bg: "bg-pink-500/10", text: "text-pink-400", border: "border-pink-500/20", glow: "group-hover:shadow-pink-500/10" },
-  amber: { bg: "bg-amber-500/10", text: "text-amber-400", border: "border-amber-500/20", glow: "group-hover:shadow-amber-500/10" },
+  teal: { bg: "bg-teal", text: "text-teal", border: "border-teal/20", glow: "group-hover:shadow-teal/10" },
+  emerald: { bg: "bg-emerald-400", text: "text-emerald-400", border: "border-emerald-500/20", glow: "group-hover:shadow-emerald-500/10" },
+  cyan: { bg: "bg-cyan-400", text: "text-cyan-400", border: "border-cyan-500/20", glow: "group-hover:shadow-cyan-500/10" },
+  orange: { bg: "bg-orange-400", text: "text-orange-400", border: "border-orange-500/20", glow: "group-hover:shadow-orange-500/10" },
+  purple: { bg: "bg-purple-400", text: "text-purple-400", border: "border-purple-500/20", glow: "group-hover:shadow-purple-500/10" },
+  blue: { bg: "bg-blue-400", text: "text-blue-400", border: "border-blue-500/20", glow: "group-hover:shadow-blue-500/10" },
+  pink: { bg: "bg-pink-400", text: "text-pink-400", border: "border-pink-500/20", glow: "group-hover:shadow-pink-500/10" },
+  amber: { bg: "bg-amber-400", text: "text-amber-400", border: "border-amber-500/20", glow: "group-hover:shadow-amber-500/10" },
 };
 
 export default function Skills() {
