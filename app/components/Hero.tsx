@@ -6,10 +6,12 @@ import { ArrowDown, MapPin, Mail, ExternalLink } from "lucide-react";
 
 const roles = [
   "Backend Developer",
+  "Full Stack Developer",
+  "Software Engineer",
   "Golang Engineer",
   "API Architect",
   "AI Integration Specialist",
-  "Systems Builder",
+  "Systems Builder"
 ];
 
 function GithubIcon({ size = 16, className = "" }: { size?: number; className?: string }) {
@@ -119,9 +121,9 @@ export default function Hero() {
           className="text-text-secondary text-lg md:text-xl max-w-2xl leading-relaxed mb-10"
         >
           I turn complex problems into{" "}
-          <span className="text-text-primary font-medium">elegant backend systems</span>.
+          <span className="text-text-primary font-medium">elegant systems</span>.
           From database architecture to production deployment, I build it all,
-          with <span className="text-teal">Golang</span> as my weapon of choice.
+          with <span className="text-teal">Golang + Javascript & AI</span> as my weapon of choice.
         </motion.p>
 
         <motion.div
@@ -149,7 +151,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.7 }}
-          className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-text-muted"
+          className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-text-secondary"
         >
           <span className="flex items-center gap-1.5">
             <MapPin size={13} />

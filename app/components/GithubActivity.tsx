@@ -192,7 +192,7 @@ export default function GithubActivity() {
           <div className="flex items-center gap-3 mb-2">
             <p className="text-teal font-mono text-sm">// github activity</p>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold text-text-primary">
+          <h2 className="text-3xl md:text-5xl heading-elegant text-text-primary">
             Code Contributions
           </h2>
           <p className="text-text-secondary mt-3 max-w-lg">
@@ -207,7 +207,7 @@ export default function GithubActivity() {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="rounded-2xl bg-surface border border-border overflow-hidden"
+            className="rounded-2xl glass-strong overflow-hidden"
           >
             <div className="flex items-center gap-3 px-6 py-4 border-b border-border flex-wrap">
               <Activity size={16} className="text-teal shrink-0" />

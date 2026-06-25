@@ -16,6 +16,7 @@
   --color-text-secondary: #8b949e;
   --color-text-muted: #484f58;
   --font-sans: var(--font-inter);
+  --font-display: var(--font-display);
   --font-mono: var(--font-jetbrains);
 }
 
@@ -122,4 +123,43 @@ body {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Display font for headings */
+.font-display {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+  letter-spacing: -0.03em;
+}
+
+/* Glass morphism */
+.glass {
+  background: rgba(22, 27, 34, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+}
+
+.glass-strong {
+  background: rgba(22, 27, 34, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+
+.glass-teal {
+  background: rgba(0, 212, 170, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 212, 170, 0.08);
+  border-radius: 16px;
+}
+
+/* Elegant section heading */
+.heading-elegant {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  font-weight: 700;
 }

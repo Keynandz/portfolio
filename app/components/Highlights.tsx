@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Zap, Eye, Database, Network, Cpu, Phone } from "lucide-react";
+import { Zap, Eye, Database, Network, Cpu } from "lucide-react";
 
 const highlights = [
   {
@@ -35,12 +35,6 @@ const highlights = [
     desc: "Built modular JWT + OAuth 2.0 middleware adopted as the standard authentication layer across all company projects.",
     tags: ["JWT", "OAuth 2.0", "Middleware"],
   },
-  {
-    icon: Phone,
-    title: "VoIP Infrastructure",
-    desc: "Deployed and configured Asterisk PBX from scratch, providing internal communication systems with custom routing and extensions.",
-    tags: ["Asterisk", "VoIP", "SIP"],
-  },
 ];
 
 export default function Highlights() {
@@ -57,7 +51,7 @@ export default function Highlights() {
           className="mb-16"
         >
           <p className="text-teal font-mono text-sm mb-2">// key wins</p>
-          <h2 className="text-3xl md:text-5xl font-bold text-text-primary">
+          <h2 className="text-3xl md:text-5xl heading-elegant text-text-primary">
             Things I&apos;m Proud Of
           </h2>
           <p className="text-text-secondary mt-3 max-w-lg">
@@ -73,7 +67,7 @@ export default function Highlights() {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="group relative p-5 sm:p-7 rounded-2xl bg-surface border border-border hover:border-teal/30 transition-all duration-500 overflow-hidden"
+              className="group relative p-5 sm:p-7 rounded-2xl glass hover:border-teal/30 transition-all duration-500 overflow-hidden"
             >
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-teal/5 via-transparent to-transparent pointer-events-none" />
 

@@ -34,12 +34,12 @@ const categories = [
   {
     label: "Databases",
     color: "purple",
-    items: ["PostgreSQL", "MySQL", "MongoDB", "Redis"],
+    items: ["PostgreSQL", "MySQL", "MongoDB", "Redis", "Supabase"],
   },
   {
     label: "DevOps",
     color: "orange",
-    items: ["Docker", "Nginx", "Git", "Linux"],
+    items: ["Docker", "Nginx", "Git", "Linux", "S3", "MinIO"],
   },
   {
     label: "AI / ML",
@@ -55,11 +55,6 @@ const categories = [
     label: "IoT & Hardware",
     color: "pink",
     items: ["Firefly MiniPC", "OrangePi", "MQTT Sensors"],
-  },
-  {
-    label: "Telephony",
-    color: "amber",
-    items: ["Asterisk PBX", "VoIP Setup", "SIP Config"],
   },
 ];
 
@@ -88,7 +83,7 @@ export default function Skills() {
           className="mb-16"
         >
           <p className="text-teal font-mono text-sm mb-2">// tech stack</p>
-          <h2 className="text-3xl md:text-5xl font-bold text-text-primary">
+          <h2 className="text-3xl md:text-5xl heading-elegant text-text-primary">
             Tools of the Trade
           </h2>
           <p className="text-text-secondary mt-3 max-w-lg">
@@ -106,7 +101,7 @@ export default function Skills() {
                 initial={{ opacity: 0, y: 25 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: catIdx * 0.06 }}
-                className={`group p-6 rounded-xl bg-surface border border-border hover:border-teal/20 transition-all duration-300 hover:shadow-lg ${c.glow}`}
+                className={`group p-6 rounded-xl glass hover:border-teal/20 transition-all duration-300 hover:shadow-lg ${c.glow}`}
               >
                 <div className="flex items-center gap-2 mb-4">
                   <span className={`w-2 h-2 rounded-full ${c.bg}`} />
@@ -133,7 +128,7 @@ export default function Skills() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="mt-12 p-6 sm:p-8 rounded-2xl bg-surface border border-border"
+          className="mt-12 p-6 sm:p-8 rounded-2xl glass-strong"
         >
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
             <div className="p-2.5 rounded-xl bg-teal/10 text-teal w-fit">

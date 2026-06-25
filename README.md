@@ -25,7 +25,7 @@ A modern, animated portfolio website built with Next.js 16, TypeScript, Tailwind
 | Section | Component | Description |
 |---------|-----------|-------------|
 | Hero | `Hero.tsx` | Name, title, typing animation, social links |
-| About | `About.tsx` | Three pillars: Backend, AI/ML, IoT |
+| About | `About.tsx` | Three pillars: Software Engineer, AI/ML, IoT |
 | Projects | `Projects.tsx` | Infinite auto-scroll carousel with drag + slider |
 | Tech Stack | `Skills.tsx` | Categorized skills with colored cards |
 | Journey | `Experience.tsx` | Career timeline with animated cards |

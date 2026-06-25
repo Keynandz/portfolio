@@ -45,3 +45,5 @@ coverage/
 # Misc
 *.pem
 .cache/
+
+AGENTS.md

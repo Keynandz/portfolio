@@ -38,14 +38,6 @@ const projects = [
     sourceCode: "https://github.com/Keynandz",
   },
   {
-    title: "VoIP Communication Platform",
-    desc: "Asterisk PBX deployment with custom dial plans, IVR menus, and SIP trunking for internal corporate communications.",
-    tech: ["Asterisk", "VoIP", "SIP", "Linux"],
-    image: "https://picsum.photos/seed/voipplatform/600/400",
-    liveDemo: "https://github.com/Keynandz",
-    sourceCode: "https://github.com/Keynandz",
-  },
-  {
     title: "POS & Inventory System",
     desc: "Full-stack point of sale application with real-time inventory sync, payment gateway integration, and reporting dashboard.",
     tech: ["Go", "PostgreSQL", "Docker"],
@@ -288,7 +280,7 @@ export default function Projects() {
         >
           <div>
             <p className="text-teal font-mono text-sm mb-2">// projects</p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-text-primary">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl heading-elegant text-text-primary">
               Things I&apos;ve Built
             </h2>
           </div>

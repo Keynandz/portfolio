@@ -39,7 +39,7 @@ export default function Contact() {
           className="mb-16"
         >
           <p className="text-teal font-mono text-sm mb-2">// let&apos;s connect</p>
-          <h2 className="text-3xl md:text-5xl font-bold text-text-primary">
+          <h2 className="text-3xl md:text-5xl heading-elegant text-text-primary">
             Got a Project in Mind?
           </h2>
           <p className="text-text-secondary mt-3 max-w-lg">
@@ -63,7 +63,7 @@ export default function Contact() {
                     {...(method.href
                       ? { href: method.href, target: method.href.startsWith("mailto") ? undefined : "_blank" }
                       : {})}
-                    className="group flex items-center gap-4 p-5 rounded-xl bg-surface border border-border hover:border-teal/20 transition-all duration-300"
+                    className="group flex items-center gap-4 p-5 rounded-xl glass hover:border-teal/20 transition-all duration-300"
                   >
                     <div className="p-2.5 rounded-xl bg-teal/10 text-teal group-hover:bg-teal/20 transition-colors">
                       <method.icon size={20} />
@@ -92,7 +92,7 @@ export default function Contact() {
               initial={{ opacity: 0, x: -20 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="group flex items-center gap-4 p-5 rounded-xl bg-surface border border-border hover:border-teal/20 transition-all duration-300"
+              className="group flex items-center gap-4 p-5 rounded-xl glass hover:border-teal/20 transition-all duration-300"
             >
               <div className="p-2.5 rounded-xl bg-teal/10 text-teal group-hover:bg-teal/20 transition-colors">
                 <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor">
@@ -123,7 +123,7 @@ export default function Contact() {
                 const msg = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
                 window.location.href = `mailto:nanpurnanda@gmail.com?subject=Hello from ${name}&body=${encodeURIComponent(msg)}`;
               }}
-              className="p-7 rounded-2xl bg-surface border border-border space-y-5"
+              className="p-7 rounded-2xl glass-strong space-y-5"
             >
               <div>
                 <label htmlFor="name" className="block text-sm text-text-muted mb-2">

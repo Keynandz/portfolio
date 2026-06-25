@@ -36,7 +36,7 @@ export default function Education() {
           className="mb-16"
         >
           <p className="text-teal font-mono text-sm mb-2">// education</p>
-          <h2 className="text-3xl md:text-5xl font-bold text-text-primary">
+          <h2 className="text-3xl md:text-5xl heading-elegant text-text-primary">
             Where I Learned
           </h2>
         </motion.div>
@@ -48,7 +48,7 @@ export default function Education() {
               initial={{ opacity: 0, y: 25 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group p-7 rounded-2xl bg-surface border border-border hover:border-teal/20 transition-all duration-300"
+              className="group p-7 rounded-2xl glass hover:border-teal/20 transition-all duration-300"
             >
               <div className="flex items-start gap-4 mb-4">
                 <div className="p-2.5 rounded-xl bg-teal/10 text-teal shrink-0">

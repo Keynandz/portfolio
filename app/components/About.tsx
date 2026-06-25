@@ -15,12 +15,12 @@ const pillars = [
   {
     icon: Server,
     title: "Backend Architecture",
-    desc: "Designing microservices and REST APIs that handle real-world scale with Golang and Echo.",
+    desc: "Designing microservices and REST APIs that handle real-world scale with Golang.",
   },
   {
     icon: Code2,
-    title: "Full Lifecycle Dev",
-    desc: "From ERD sketches to production deploys, I own the entire pipeline, not just a slice of it.",
+    title: "Frontend & Full Stack",
+    desc: "Building polished interfaces with Next.js and React, from concept to production.",
   },
   {
     icon: Cpu,
@@ -78,7 +78,7 @@ export default function About() {
           className="mb-16"
         >
           <p className="text-teal font-mono text-sm mb-2">// about me</p>
-          <h2 className="text-3xl md:text-5xl font-bold text-text-primary">
+          <h2 className="text-3xl md:text-5xl heading-elegant text-text-primary">
             The Engineer Behind the Code
           </h2>
         </motion.div>
@@ -92,17 +92,16 @@ export default function About() {
           >
             <p className="text-text-secondary text-base sm:text-lg leading-relaxed">
               I don&apos;t just write code, I{" "}
-              <span className="text-text-primary font-medium">architect systems</span>.
+              <span className="text-text-primary font-medium">build complete systems</span>.
               Every project I take on starts from a blank canvas: mapping entities,
-              designing schemas, choosing the right protocol, and building APIs
-              that other engineers actually enjoy consuming.
+              designing schemas, choosing the right protocol, and building both APIs
+              and interfaces that people actually enjoy using.
             </p>
             <p className="text-text-secondary text-base sm:text-lg leading-relaxed">
               My core loop is{" "}
-              <span className="text-teal font-medium">Golang + PostgreSQL + Docker</span>,
+              <span className="text-teal font-medium">Golang + Next.js + PostgreSQL + Docker</span>,
               but I&apos;m equally comfortable training object detection models in
-              Python, wiring up MQTT sensors on an OrangePi, or setting up a
-              VoIP stack with Asterisk.
+              Python or wiring up MQTT sensors on an OrangePi.
             </p>
             <p className="text-text-secondary text-base sm:text-lg leading-relaxed">
               What drives me? Shipping things that{" "}
@@ -117,7 +116,7 @@ export default function About() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
-                  className="text-center p-4 rounded-xl bg-surface border border-border"
+                  className="text-center p-4 rounded-xl glass-teal"
                 >
                   <p className="text-2xl md:text-3xl font-bold text-teal">
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
@@ -140,7 +139,7 @@ export default function About() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-                className="group p-5 rounded-xl bg-surface border border-border hover:border-teal/30 transition-all duration-300"
+                className="group p-5 rounded-xl glass hover:border-teal/30 transition-all duration-300"
               >
                 <div className="flex items-start gap-4">
                   <div className="p-2.5 rounded-lg bg-teal/10 text-teal shrink-0 group-hover:bg-teal/20 transition-colors">
