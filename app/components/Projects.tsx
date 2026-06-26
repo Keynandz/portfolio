@@ -211,7 +211,7 @@ export default function Projects() {
 
   useEffect(() => {
     if (!inView || setWidth <= 0) return;
-    const speed = 50;
+    const speed = 30;
     lastTime.current = null;
 
     const tick = (time: number) => {
