@@ -3,21 +3,22 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Code2, Globe } from "lucide-react";
+import Image from "next/image";
 
 const projects = [
   {
-    title: "Smart Surveillance System",
-    desc: "Real-time object detection platform integrating YOLO models with Go backend for live video analytics across multiple camera feeds.",
-    tech: ["Golang", "Python", "YOLO", "Frigate"],
-    image: "https://picsum.photos/seed/surveillance/600/400",
-    liveDemo: "https://github.com/Keynandz",
-    sourceCode: "https://github.com/Keynandz",
+    title: "HSE G4S SUPERAPP",
+    desc: "Microservices-based super app built from scratch serving thousands of G4S users. Designed complete ERD and backend architecture with real-time WebSocket communication.",
+    tech: ["Golang", "PostgreSQL", "MinIO", "WebSocket", "Docker"],
+    images: ["/projects/project-1.png", "/projects/project-1-slide2.jpeg"],
+    liveDemo: "https://hse.solu.co.id",
+    sourceCode: "",
   },
   {
     title: "E-Commerce Microservices",
     desc: "Scalable marketplace backend with 8+ microservices handling inventory, payments, orders, and user management via REST + gRPC.",
     tech: ["Go", "Echo", "PostgreSQL", "Redis"],
-    image: "https://picsum.photos/seed/ecommerce/600/400",
+    image: "/projects/project-1.png",
     liveDemo: "https://github.com/Keynandz",
     sourceCode: "https://github.com/Keynandz",
   },
@@ -25,7 +26,7 @@ const projects = [
     title: "IoT Environment Monitor",
     desc: "Sensor data pipeline collecting from 20+ MQTT devices on OrangePi edge hardware with real-time dashboard and alerting.",
     tech: ["Go", "MQTT", "Python", "OrangePi"],
-    image: "https://picsum.photos/seed/iotmonitor/600/400",
+    image: "/projects/project-1.png",
     liveDemo: "https://github.com/Keynandz",
     sourceCode: "https://github.com/Keynandz",
   },
@@ -33,7 +34,7 @@ const projects = [
     title: "Auth Middleware Framework",
     desc: "Reusable JWT + OAuth 2.0 authentication module adopted as the standard auth layer across all company backend projects.",
     tech: ["Go", "JWT", "OAuth 2.0", "Redis"],
-    image: "https://picsum.photos/seed/authframework/600/400",
+    image: "/projects/project-1.png",
     liveDemo: "https://github.com/Keynandz",
     sourceCode: "https://github.com/Keynandz",
   },
@@ -41,7 +42,7 @@ const projects = [
     title: "POS & Inventory System",
     desc: "Full-stack point of sale application with real-time inventory sync, payment gateway integration, and reporting dashboard.",
     tech: ["Go", "PostgreSQL", "Docker"],
-    image: "https://picsum.photos/seed/posinventory/600/400",
+    image: "/projects/project-1.png",
     liveDemo: "https://github.com/Keynandz",
     sourceCode: "https://github.com/Keynandz",
   },
@@ -49,7 +50,7 @@ const projects = [
     title: "Campus Security Analytics",
     desc: "YOLOv5 model trained for campus perimeter detection achieving 85% mAP, deployed on edge devices with Go inference server.",
     tech: ["Python", "YOLOv5", "Go", "Edge"],
-    image: "https://picsum.photos/seed/campussecure/600/400",
+    image: "/projects/project-1.png",
     liveDemo: "https://github.com/Keynandz",
     sourceCode: "https://github.com/Keynandz",
   },
@@ -57,7 +58,7 @@ const projects = [
     title: "Workflow Automation Hub",
     desc: "N8N-based integration platform connecting 15+ business tools with custom webhook handlers and data transformation pipelines.",
     tech: ["N8N", "Go", "Webhooks", "REST"],
-    image: "https://picsum.photos/seed/workflowauto/600/400",
+    image: "/projects/project-1.png",
     liveDemo: "https://github.com/Keynandz",
     sourceCode: "https://github.com/Keynandz",
   },
@@ -73,16 +74,30 @@ function GithubIcon({ size = 14 }: { size?: number }) {
 
 function ProjectCard({ project }: { project: (typeof projects)[number] }) {
   const [imgError, setImgError] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
+  const images = project.images || (project.image ? [project.image] : []);
+  const hasMultipleImages = images.length > 1;
+
+  useEffect(() => {
+    if (!hasMultipleImages) return;
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [hasMultipleImages, images.length]);
 
   return (
-    <div className="flex-shrink-0 w-[300px] sm:w-[340px] rounded-2xl bg-surface border border-border hover:border-teal/25 transition-all duration-300 overflow-hidden group/card">
-      <div className="relative h-40 sm:h-44 bg-bg-secondary overflow-hidden">
+    <div className="flex-shrink-0 w-[330px] sm:w-[374px] rounded-2xl bg-surface border border-border hover:border-teal/25 transition-all duration-300 overflow-hidden group/card">
+      <div className="relative h-[176px] sm:h-[194px] bg-bg-secondary overflow-hidden">
         {!imgError ? (
-          <img
-            src={project.image}
+          <Image
+            src={images[currentImage]}
             alt={project.title}
+            width={600}
+            height={400}
             onError={() => setImgError(true)}
-            className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover/card:scale-105 transition-all duration-500"
+            loading="lazy"
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-bg-secondary via-bg to-bg-secondary">
@@ -93,12 +108,25 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-surface/70 via-transparent to-transparent" />
+        {hasMultipleImages && (
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentImage(i)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  i === currentImage ? "bg-teal w-4" : "bg-white/50 hover:bg-white/70"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
       <div className="p-5">
         <h3 className="text-text-primary font-bold text-base leading-tight mb-2">
           {project.title}
         </h3>
-        <p className="text-text-secondary text-xs leading-relaxed mb-4 line-clamp-2">
+        <p className="text-text-secondary text-xs leading-relaxed mb-4">
           {project.desc}
         </p>
         <div className="flex flex-wrap gap-1.5 mb-4">
@@ -112,26 +140,30 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
           ))}
         </div>
         <div className="flex gap-2">
-          <a
-            href={project.liveDemo}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 bg-teal text-bg text-xs font-semibold rounded-lg hover:bg-teal-light transition-colors"
-          >
-            <Globe size={13} />
-            Live Demo
-          </a>
-          <a
-            href={project.sourceCode}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 border border-border-light text-text-primary text-xs font-medium rounded-lg hover:border-teal/40 hover:bg-teal/5 transition-colors"
-          >
-            <GithubIcon size={13} />
-            Source Code
-          </a>
+          {project.liveDemo && (
+            <a
+              href={project.liveDemo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`flex items-center justify-center gap-1.5 px-3 py-2 bg-teal text-bg text-xs font-semibold rounded-lg hover:bg-teal-light transition-colors pointer-events-auto ${
+                project.sourceCode ? "flex-1" : "w-full"
+              }`}
+            >
+              <Globe size={13} />
+              Live Demo
+            </a>
+          )}
+          {project.sourceCode && (
+            <a
+              href={project.sourceCode}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 border border-border-light text-text-primary text-xs font-medium rounded-lg hover:border-teal/40 hover:bg-teal/5 transition-colors pointer-events-auto"
+            >
+              <GithubIcon size={13} />
+              Source Code
+            </a>
+          )}
         </div>
       </div>
     </div>
@@ -150,7 +182,6 @@ export default function Projects() {
   const [setWidth, setSetWidth] = useState(0);
   const [hovering, setHovering] = useState(false);
 
-  const dragActive = useRef(false);
   const dragStartX = useRef(0);
   const dragStartScroll = useRef(0);
   const lastTime = useRef<number | null>(null);
@@ -181,38 +212,44 @@ export default function Projects() {
   useEffect(() => {
     if (!inView || setWidth <= 0) return;
     const speed = 50;
+    lastTime.current = null;
 
     const tick = (time: number) => {
       const vp = viewportRef.current;
       if (!vp) return;
 
-      if (lastTime.current === null) lastTime.current = time;
+      if (lastTime.current === null) {
+        lastTime.current = time;
+      }
       const delta = time - lastTime.current;
       lastTime.current = time;
 
-      if (!dragActive.current && !hovering) {
+      if (!isDragging) {
         vp.scrollLeft += (speed * delta) / 1000;
-      }
-
-      if (vp.scrollLeft >= setWidth * 2) {
-        vp.scrollLeft -= setWidth;
+        
+        // Seamless wrap
+        if (vp.scrollLeft >= setWidth * 2) {
+          vp.scrollLeft -= setWidth;
+        } else if (vp.scrollLeft < setWidth * 0.5) {
+          vp.scrollLeft += setWidth;
+        }
       }
 
       setProgress((vp.scrollLeft % setWidth) / setWidth);
-
       rafId.current = requestAnimationFrame(tick);
     };
 
     rafId.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId.current);
-  }, [inView, setWidth, hovering]);
+    return () => {
+      cancelAnimationFrame(rafId.current);
+    };
+  }, [inView, setWidth]);
 
   useEffect(() => {
     if (!isDragging) lastTime.current = null;
   }, [isDragging]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
-    dragActive.current = true;
     setIsDragging(true);
     dragStartX.current = e.clientX;
     dragStartScroll.current = viewportRef.current?.scrollLeft ?? 0;
@@ -220,50 +257,18 @@ export default function Projects() {
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!dragActive.current || !viewportRef.current) return;
+    if (!isDragging || !viewportRef.current) return;
     const dx = e.clientX - dragStartX.current;
     viewportRef.current.scrollLeft = dragStartScroll.current - dx;
   };
 
   const endDrag = (e?: React.PointerEvent) => {
-    if (!dragActive.current) return;
-    dragActive.current = false;
+    if (!isDragging) return;
     setIsDragging(false);
     if (e?.pointerId && viewportRef.current) {
       try {
         viewportRef.current.releasePointerCapture(e.pointerId);
       } catch {}
-    }
-  };
-
-  const barRef = useRef<HTMLDivElement>(null);
-  const barDragging = useRef(false);
-
-  const syncBarDrag = (clientX: number) => {
-    if (!barRef.current || !viewportRef.current || setWidth <= 0) return;
-    const rect = barRef.current.getBoundingClientRect();
-    const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
-    viewportRef.current.scrollLeft = setWidth + ratio * setWidth;
-  };
-
-  const handleBarPointerDown = (e: React.PointerEvent) => {
-    barDragging.current = true;
-    setHovering(true);
-    barRef.current?.setPointerCapture(e.pointerId);
-    syncBarDrag(e.clientX);
-  };
-
-  const handleBarPointerMove = (e: React.PointerEvent) => {
-    if (!barDragging.current) return;
-    syncBarDrag(e.clientX);
-  };
-
-  const handleBarPointerUp = (e?: React.PointerEvent) => {
-    if (!barDragging.current) return;
-    barDragging.current = false;
-    setHovering(false);
-    if (e?.pointerId && barRef.current) {
-      try { barRef.current.releasePointerCapture(e.pointerId); } catch {}
     }
   };
 
@@ -302,37 +307,11 @@ export default function Projects() {
           onPointerMove={handlePointerMove}
           onPointerUp={endDrag}
           onPointerLeave={endDrag}
-          onMouseEnter={() => setHovering(true)}
-          onMouseLeave={() => {
-            setHovering(false);
-            endDrag();
-          }}
         >
           <div ref={trackRef} className="flex gap-5 pb-4">
             {tripled.map((project, i) => (
               <ProjectCard key={`${project.title}-${i}`} project={project} />
             ))}
-          </div>
-        </div>
-
-        <div className="max-w-6xl mx-auto px-6 mt-6">
-          <div
-            ref={barRef}
-            onPointerDown={handleBarPointerDown}
-            onPointerMove={handleBarPointerMove}
-            onPointerUp={handleBarPointerUp}
-            onPointerLeave={handleBarPointerUp}
-            className="relative h-6 flex items-center cursor-pointer group"
-          >
-            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1.5 bg-border rounded-full" />
-            <div
-              className="absolute left-0 top-1/2 -translate-y-1/2 h-1.5 bg-teal/40 rounded-full transition-[width] duration-75"
-              style={{ width: `${progress * 100}%` }}
-            />
-            <div
-              className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 bg-teal rounded-full shadow-lg shadow-teal/30 border-2 border-bg transition-[left,width,height] duration-75 group-hover:scale-125"
-              style={{ left: `${progress * 100}%` }}
-            />
           </div>
         </div>
       </motion.div>

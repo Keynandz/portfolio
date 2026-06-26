@@ -19,10 +19,10 @@ const categories = [
   {
     label: "Languages",
     color: "teal",
-    items: ["Golang", "Python", "TypeScript", "JavaScript", "PHP", "SQL"],
+    items: ["Golang", "Python", "TypeScript", "JavaScript", "PHP", "Java", "SQL"],
   },
   {
-    label: "Frontend",
+    label: "Frontend",  
     color: "emerald",
     items: ["React", "Next.js", "Tailwind CSS"],
   },

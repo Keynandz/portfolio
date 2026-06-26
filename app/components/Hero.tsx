@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 import { ArrowDown, MapPin, Mail, ExternalLink } from "lucide-react";
 
 const roles = [
+  "Software Engineer",
   "Backend Developer",
   "Full Stack Developer",
-  "Software Engineer",
   "Golang Engineer",
   "API Architect",
   "AI Integration Specialist",

@@ -5,22 +5,33 @@ import "./globals.css";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Ananda Purnomo | Software Engineer",
   description:
     "Crafting scalable systems, REST APIs, and AI-integrated solutions.",
+  icons: {
+    icon: "/favicon.svg",
+  },
+  openGraph: {
+    title: "Ananda Purnomo | Software Engineer",
+    description: "Crafting scalable systems, REST APIs, and AI-integrated solutions.",
+    type: "website",
+  },
 };
 
 export const viewport: Viewport = {

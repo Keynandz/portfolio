@@ -102,7 +102,7 @@ export default function GithubActivity() {
       .catch(() => {});
   }, []);
 
-  const { weeks, monthLabels, yearLabels } = data
+  const { weeks, monthLabels, yearLabels } = data && data.contributions && Array.isArray(data.contributions)
     ? buildCalendar(data.contributions)
     : { weeks: [], monthLabels: [], yearLabels: [] };
 

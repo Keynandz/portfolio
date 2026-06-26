@@ -1,15 +1,16 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { GraduationCap, Trophy, BookOpen } from "lucide-react";
+import { GraduationCap, Trophy, BookOpen, X } from "lucide-react";
+import Image from "next/image";
 
 const education = [
   {
     degree: "BSc Information Systems",
     school: "Universitas Terbuka",
     period: "2024 - 2027 (In Progress)",
-    detail: "GPA 3.75 / 4.00, balancing full-time work with academic growth.",
+    detail: "Last GPA 3.75 / 4.00, balancing full-time work with academic growth.",
     icon: BookOpen,
   },
   {
@@ -18,13 +19,15 @@ const education = [
     period: "2020 - 2024",
     detail: "IT Club member. Where the passion for systems and networks first sparked.",
     icon: GraduationCap,
-    award: "3rd Place, National Data Science Competition",
+    award: "3rd Place, National Data Science Competition (TSDN 2023)",
+    awardImage: "/projects/Sertifikat-Pemenang-TSDN-2023-Tim-Exuberance_page-0001.jpg",
   },
 ];
 
 export default function Education() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [showImage, setShowImage] = useState<string | null>(null);
 
   return (
     <section id="education" ref={ref} className="py-28 px-6">
@@ -70,7 +73,10 @@ export default function Education() {
               </p>
 
               {edu.award && (
-                <div className="mt-4 flex items-center gap-2 px-3 py-2 rounded-lg bg-teal/5 border border-teal/10">
+                <div
+                  onClick={() => setShowImage(edu.awardImage || null)}
+                  className="mt-4 flex items-center gap-2 px-3 py-2 rounded-lg bg-teal/5 border border-teal/10 cursor-pointer hover:bg-teal/10 transition-colors"
+                >
                   <Trophy size={14} className="text-teal" />
                   <span className="text-xs text-teal font-medium">{edu.award}</span>
                 </div>
@@ -79,6 +85,36 @@ export default function Education() {
           ))}
         </div>
       </div>
+
+      {showImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          onClick={() => setShowImage(null)}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="relative max-w-4xl w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowImage(null)}
+              className="absolute -top-12 right-0 p-2 text-text-secondary hover:text-text-primary transition-colors"
+            >
+              <X size={24} />
+            </button>
+            <div className="rounded-2xl glass overflow-hidden border border-border">
+              <Image 
+                src={showImage} 
+                alt="Certificate" 
+                width={1200}
+                height={800}
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 }
