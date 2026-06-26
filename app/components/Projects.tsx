@@ -225,7 +225,7 @@ export default function Projects() {
       const delta = time - lastTime.current;
       lastTime.current = time;
 
-      if (!isDragging) {
+      if (!isDragging && !hovering) {
         exactScroll += (speed * delta) / 1000;
         
         // Seamless wrap
@@ -249,7 +249,7 @@ export default function Projects() {
     return () => {
       cancelAnimationFrame(rafId.current);
     };
-  }, [inView, setWidth]);
+  }, [inView, setWidth, isDragging, hovering]);
 
   useEffect(() => {
     if (!isDragging) lastTime.current = null;
@@ -312,7 +312,11 @@ export default function Projects() {
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={endDrag}
-          onPointerLeave={endDrag}
+          onPointerEnter={() => setHovering(true)}
+          onPointerLeave={(e) => {
+            setHovering(false);
+            endDrag(e);
+          }}
         >
           <div ref={trackRef} className="flex gap-5 pb-4">
             {tripled.map((project, i) => (

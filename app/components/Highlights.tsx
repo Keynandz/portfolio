@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Zap, Eye, Database, Network, Cpu } from "lucide-react";
+import { Zap, Eye, Database, Network, Cpu, Activity } from "lucide-react";
 
 const highlights = [
   {
@@ -34,6 +34,12 @@ const highlights = [
     title: "Reusable Auth Framework",
     desc: "Built modular JWT + OAuth 2.0 middleware adopted as the standard authentication layer across all company projects.",
     tags: ["JWT", "OAuth 2.0", "Middleware"],
+  },
+  {
+    icon: Activity,
+    title: "Real-time Data Processing",
+    desc: "Implemented robust WebSocket-based services for instant data synchronization and real-time user notifications across distributed systems.",
+    tags: ["WebSocket", "Go", "Real-time"],
   },
 ];
 
