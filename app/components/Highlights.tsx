@@ -89,7 +89,7 @@ export default function Highlights() {
                   {item.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-1 text-[11px] font-mono rounded-md bg-bg border border-border text-text-muted"
+                      className="px-2.5 py-1 text-[11px] font-mono rounded-md bg-teal/8 border border-teal/15 text-teal"
                     >
                       {tag}
                     </span>

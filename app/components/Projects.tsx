@@ -213,6 +213,7 @@ export default function Projects() {
     if (!inView || setWidth <= 0) return;
     const speed = 30;
     lastTime.current = null;
+    let exactScroll = viewportRef.current?.scrollLeft || 0;
 
     const tick = (time: number) => {
       const vp = viewportRef.current;
@@ -225,14 +226,19 @@ export default function Projects() {
       lastTime.current = time;
 
       if (!isDragging) {
-        vp.scrollLeft += (speed * delta) / 1000;
+        exactScroll += (speed * delta) / 1000;
         
         // Seamless wrap
-        if (vp.scrollLeft >= setWidth * 2) {
-          vp.scrollLeft -= setWidth;
-        } else if (vp.scrollLeft < setWidth * 0.5) {
-          vp.scrollLeft += setWidth;
+        if (exactScroll >= setWidth * 2) {
+          exactScroll -= setWidth;
+        } else if (exactScroll < setWidth * 0.5) {
+          exactScroll += setWidth;
         }
+
+        vp.scrollLeft = exactScroll;
+      } else {
+        // Sync exactScroll when user drags
+        exactScroll = vp.scrollLeft;
       }
 
       setProgress((vp.scrollLeft % setWidth) / setWidth);
