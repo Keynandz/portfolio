@@ -74,6 +74,24 @@ export default function Chatbot() {
 
   return (
     <>
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ delay: 2.5, duration: 0.4 }}
+            className="fixed bottom-[34px] right-[88px] z-50 bg-surface border border-teal/20 text-text-primary text-sm px-4 py-2 rounded-2xl rounded-br-sm shadow-lg pointer-events-none flex items-center gap-2 glow-teal-sm"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-teal"></span>
+            </span>
+            Ask me something!
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <motion.button
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -81,7 +99,12 @@ export default function Chatbot() {
         onClick={() => setIsOpen(true)}
         className={`fixed bottom-6 right-6 z-50 p-4 rounded-full bg-teal text-bg shadow-lg glow-teal transition-transform hover:scale-110 ${isOpen ? "hidden" : "block"}`}
       >
-        <MessageSquare size={24} />
+        <motion.div
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+        >
+          <MessageSquare size={24} />
+        </motion.div>
       </motion.button>
 
       <AnimatePresence>

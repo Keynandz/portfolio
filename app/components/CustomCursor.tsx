@@ -5,12 +5,13 @@ import { useEffect, useRef, useState } from "react";
 export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  const [hovering, setHovering] = useState(false);
   const [visible, setVisible] = useState(false);
 
   const mouse = useRef({ x: 0, y: 0 });
   const ring = useRef({ x: 0, y: 0 });
   const currentScale = useRef(1);
+
+  const isHovering = useRef(false);
 
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
@@ -34,7 +35,7 @@ export default function CustomCursor() {
       const isClickable = target.closest(
         "a, button, [role='button'], [role='link'], input, textarea, select, label[for], .cursor-pointer"
       );
-      setHovering(!!isClickable);
+      isHovering.current = !!isClickable;
     };
 
     let raf: number;
@@ -42,12 +43,19 @@ export default function CustomCursor() {
       ring.current.x += (mouse.current.x - ring.current.x) * 0.15;
       ring.current.y += (mouse.current.y - ring.current.y) * 0.15;
 
-      const targetScale = hovering ? 1.5 : 1;
+      const targetScale = isHovering.current ? 1.5 : 1;
       currentScale.current += (targetScale - currentScale.current) * 0.2;
 
       if (ringRef.current) {
         const offset = 16 * currentScale.current;
         ringRef.current.style.transform = `translate(${ring.current.x - offset}px, ${ring.current.y - offset}px) scale(${currentScale.current})`;
+        
+        // Update border color directly based on hover state to avoid React renders
+        if (isHovering.current) {
+          ringRef.current.style.border = "2px solid rgba(0, 212, 170, 0.8)";
+        } else {
+          ringRef.current.style.border = "1.5px solid rgba(0, 212, 170, 0.4)";
+        }
       }
       raf = requestAnimationFrame(animateRing);
     };
@@ -65,7 +73,7 @@ export default function CustomCursor() {
       document.removeEventListener("mouseenter", onEnter);
       document.removeEventListener("mouseleave", onLeave);
     };
-  }, [visible, hovering]);
+  }, [visible]);
 
   if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
     return null;
@@ -86,7 +94,7 @@ export default function CustomCursor() {
         ref={ringRef}
         className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[9999]"
         style={{
-          border: hovering ? "2px solid rgba(0, 212, 170, 0.8)" : "1.5px solid rgba(0, 212, 170, 0.4)",
+          border: "1.5px solid rgba(0, 212, 170, 0.4)",
           opacity: visible ? 1 : 0,
           transition: "opacity 0.3s, border 0.2s",
           willChange: "transform",

@@ -7,11 +7,11 @@ import Image from "next/image";
 
 const projects = [
   {
-    title: "HSE G4S SUPERAPP",
+    title: "G4S Super App",
     desc: "Microservices-based super app built from scratch serving thousands of G4S users. Designed complete ERD and backend architecture with real-time WebSocket communication.",
     tech: ["Golang", "PostgreSQL", "MinIO", "WebSocket", "Docker"],
-    images: ["/projects/project-1.png", "/projects/project-1-slide2.jpeg"],
-    liveDemo: "https://hse.solu.co.id",
+    images: ["/projects/project-1-slide2.jpeg", "/projects/project-1.png"],
+    liveDemo: "https://gracia.g4sindonesia.com",
     sourceCode: "",
   },
   {
@@ -178,7 +178,6 @@ export default function Projects() {
   const trackRef = useRef<HTMLDivElement>(null);
 
   const [isDragging, setIsDragging] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [setWidth, setSetWidth] = useState(0);
   const [hovering, setHovering] = useState(false);
 
@@ -237,11 +236,29 @@ export default function Projects() {
 
         vp.scrollLeft = exactScroll;
       } else {
-        // Sync exactScroll when user drags
+        // Sync exactScroll when user drags or hovers
         exactScroll = vp.scrollLeft;
+
+        let wrapped = false;
+        let shift = 0;
+        if (exactScroll >= setWidth * 2) {
+          shift = -setWidth;
+          exactScroll += shift;
+          wrapped = true;
+        } else if (exactScroll < setWidth * 0.5) {
+          shift = setWidth;
+          exactScroll += shift;
+          wrapped = true;
+        }
+
+        if (wrapped) {
+          vp.scrollLeft = exactScroll;
+          if (isDragging) {
+            dragStartScroll.current += shift;
+          }
+        }
       }
 
-      setProgress((vp.scrollLeft % setWidth) / setWidth);
       rafId.current = requestAnimationFrame(tick);
     };
 
@@ -256,6 +273,9 @@ export default function Projects() {
   }, [isDragging]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
+    if ((e.target as HTMLElement).closest("a, button")) {
+      return;
+    }
     setIsDragging(true);
     dragStartX.current = e.clientX;
     dragStartScroll.current = viewportRef.current?.scrollLeft ?? 0;
@@ -309,14 +329,19 @@ export default function Projects() {
         <div
           ref={viewportRef}
           className="overflow-x-auto scrollbar-hide px-6 select-none"
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={endDrag}
-          onPointerEnter={() => setHovering(true)}
+          onPointerDown={(e) => e.pointerType === "mouse" && handlePointerDown(e)}
+          onPointerMove={(e) => e.pointerType === "mouse" && handlePointerMove(e)}
+          onPointerUp={(e) => e.pointerType === "mouse" && endDrag(e)}
+          onPointerEnter={(e) => e.pointerType === "mouse" && setHovering(true)}
           onPointerLeave={(e) => {
-            setHovering(false);
-            endDrag(e);
+            if (e.pointerType === "mouse") {
+              setHovering(false);
+              endDrag(e);
+            }
           }}
+          onTouchStart={() => setHovering(true)}
+          onTouchEnd={() => setHovering(false)}
+          onTouchCancel={() => setHovering(false)}
         >
           <div ref={trackRef} className="flex gap-5 pb-4">
             {tripled.map((project, i) => (
