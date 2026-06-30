@@ -13,6 +13,8 @@ import {
   FileText,
   KeyRound,
   ShieldCheck,
+  Cpu,
+  Lock,
 } from "lucide-react";
 
 const categories = [
@@ -22,39 +24,39 @@ const categories = [
     items: ["Golang", "Python", "TypeScript", "JavaScript", "PHP", "Java", "SQL"],
   },
   {
-    label: "Frontend",  
+    label: "Frontend & UI",  
     color: "emerald",
-    items: ["React", "Next.js", "Tailwind CSS"],
+    items: ["React", "Next.js", "Tailwind CSS", "Framer Motion"],
   },
   {
-    label: "Backend",
+    label: "Backend Frameworks",
     color: "cyan",
-    items: ["Node.js", "Echo", "REST API", "Swagger"],
+    items: ["Echo (Go)", "Node.js", "Express.js"],
   },
   {
-    label: "Databases",
+    label: "Databases & Cache",
     color: "purple",
     items: ["PostgreSQL", "MySQL", "MongoDB", "Redis", "Supabase"],
   },
   {
-    label: "DevOps",
+    label: "DevOps & Cloud",
     color: "orange",
-    items: ["Docker", "Nginx", "Git", "Linux", "S3", "MinIO"],
+    items: ["Docker", "Nginx", "Linux", "S3 / MinIO", "Firebase"],
   },
   {
-    label: "AI / ML",
+    label: "API & Dev Tools",
     color: "blue",
-    items: ["YOLO Detection", "LLM Integration", "Frigate NVR"],
+    items: ["Postman", "Swagger", "N8N", "Git / GitHub"],
   },
   {
-    label: "Architecture",
+    label: "AI & Edge Hardware",
     color: "pink",
-    items: ["Microservices", "MQTT", "JWT / OAuth", "N8N"],
+    items: ["YOLOv5", "LLM Integration", "OrangePi", "Firefly MiniPC", "Frigate NVR"],
   },
   {
-    label: "IoT & Hardware",
-    color: "pink",
-    items: ["Firefly MiniPC", "OrangePi", "MQTT Sensors"],
+    label: "System Architecture",
+    color: "amber",
+    items: ["Microservices", "RESTful APIs", "MQTT Protocol", "Event-Driven"],
   },
 ];
 
@@ -141,16 +143,16 @@ export default function Skills() {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
             {[
-              { name: "ERD Design", icon: Table2 },
-              { name: "Database Migration", icon: ArrowRightLeft },
+              { name: "ERD & Schema Design", icon: Table2 },
+              { name: "Database Migrations", icon: ArrowRightLeft },
               { name: "Query Optimization", icon: Gauge },
-              { name: "Docker Compose", icon: Container },
-              { name: "Postman", icon: Send },
               { name: "Performance Tuning", icon: Rocket },
-              { name: "CI/CD Concepts", icon: GitBranch },
-              { name: "API Documentation", icon: FileText },
-              { name: "Session Management", icon: KeyRound },
+              { name: "CI/CD Pipelines", icon: GitBranch },
+              { name: "Technical Documentation", icon: FileText },
+              { name: "Auth (OAuth 2.0 / JWT)", icon: KeyRound },
+              { name: "Data Security & Privacy", icon: Lock },
               { name: "Rate Limiting", icon: ShieldCheck },
+              { name: "Edge Device Integration", icon: Cpu },
             ].map((s) => (
               <div
                 key={s.name}
