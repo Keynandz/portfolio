@@ -7,7 +7,7 @@ import { Code2, Server, Cpu, Shield } from "lucide-react";
 const stats = [
   { value: 15, suffix: "+", label: "Systems Built" },
   { value: 4302, suffix: "", label: "GitHub Commits" },
-  { value: 6, suffix: "+", label: "AI Projects" },
+  { value: 27, suffix: "", label: "Repos Contributed" },
   { value: 3, suffix: "yrs", label: "Experience" },
 ];
 
@@ -101,7 +101,7 @@ export default function About() {
               My core loop is{" "}
               <span className="text-teal font-medium">Golang + Next.js + PostgreSQL + Docker</span>,
               but I&apos;m equally comfortable training object detection models in
-              Python or wiring up MQTT sensors on an OrangePi.
+              Python or wiring up MQTT sensors on an MiniPC.
             </p>
             <p className="text-text-secondary text-base sm:text-lg leading-relaxed">
               What drives me? Shipping things that{" "}
