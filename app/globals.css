@@ -163,3 +163,24 @@ body {
   line-height: 1.1;
   font-weight: 700;
 }
+
+/* Performance: skip rendering off-screen sections */
+section[id] {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+/* Performance: contain layout/paint for heavy widgets */
+.glass, .glass-strong, .glass-teal {
+  contain: layout paint style;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

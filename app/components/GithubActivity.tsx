@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import { motion, useInView } from "framer-motion";
 import { Activity } from "lucide-react";
 
@@ -102,9 +102,11 @@ export default function GithubActivity() {
       .catch(() => {});
   }, []);
 
-  const { weeks, monthLabels, yearLabels } = data && data.contributions && Array.isArray(data.contributions)
-    ? buildCalendar(data.contributions)
-    : { weeks: [], monthLabels: [], yearLabels: [] };
+  const { weeks, monthLabels, yearLabels } = useMemo(() => {
+    return data && data.contributions && Array.isArray(data.contributions)
+      ? buildCalendar(data.contributions)
+      : { weeks: [], monthLabels: [], yearLabels: [] };
+  }, [data]);
 
   const CELL = 11;
   const GAP = 2;
