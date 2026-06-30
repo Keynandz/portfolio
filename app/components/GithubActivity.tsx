@@ -70,7 +70,9 @@ function buildCalendar(contributions: DayCell[]): CalendarData {
     const m = checkDate.getMonth();
     const y = checkDate.getFullYear();
     if (m !== lastMonth && checkDate <= lastDate) {
-      monthLabels.push({ label: MONTHS[m], weekIndex: w });
+      if (w !== 0 || m === firstDate.getMonth()) {
+        monthLabels.push({ label: MONTHS[m], weekIndex: w });
+      }
       lastMonth = m;
     }
     if (y !== lastYear && checkDate <= lastDate) {
@@ -89,7 +91,8 @@ export default function GithubActivity() {
   const [data, setData] = useState<GithubData | null>(null);
   const [hovered, setHovered] = useState<DayCell | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const progressLineRef = useRef<HTMLDivElement>(null);
+  const progressThumbRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const dragStartX = useRef(0);
   const dragScrollLeft = useRef(0);
@@ -117,9 +120,11 @@ export default function GithubActivity() {
 
   const updateProgress = useCallback(() => {
     const el = scrollRef.current;
-    if (!el) return;
+    if (!el || !progressLineRef.current || !progressThumbRef.current) return;
     const max = el.scrollWidth - el.clientWidth;
-    setScrollProgress(max > 0 ? el.scrollLeft / max : 0);
+    const p = max > 0 ? el.scrollLeft / max : 0;
+    progressLineRef.current.style.width = `${p * 100}%`;
+    progressThumbRef.current.style.left = `calc(${p * 100}% - 8px)`;
   }, []);
 
   useEffect(() => {
@@ -168,6 +173,7 @@ export default function GithubActivity() {
       const rat = Math.max(0, Math.min(1, (ev.clientX - r.left) / r.width));
       if (scrollRef.current) {
         scrollRef.current.scrollLeft = rat * (scrollRef.current.scrollWidth - scrollRef.current.clientWidth);
+        updateProgress();
       }
     };
     const upHandler = () => {
@@ -178,7 +184,7 @@ export default function GithubActivity() {
     bar.addEventListener("pointerup", upHandler);
   };
 
-  const grandTotal = data
+  const grandTotal = data && data.years
     ? data.years.reduce((sum, y) => sum + (data.yearTotals[y] ?? 0), 0)
     : 0;
 
@@ -204,7 +210,7 @@ export default function GithubActivity() {
           </p>
         </motion.div>
 
-        {data && weeks.length > 0 && (
+        {data && data.years && weeks.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -350,12 +356,14 @@ export default function GithubActivity() {
                   onPointerDown={onBarDown}
                 >
                   <div
-                    className="absolute top-1/2 -translate-y-1/2 h-1 rounded-full bg-teal/30 transition-[width]"
-                    style={{ width: `${scrollProgress * 100}%` }}
+                    ref={progressLineRef}
+                    className="absolute top-1/2 -translate-y-1/2 h-1 rounded-full bg-teal/30"
+                    style={{ width: "0%" }}
                   />
                   <div
+                    ref={progressThumbRef}
                     className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-teal shadow-lg shadow-teal/20"
-                    style={{ left: `calc(${scrollProgress * 100}% - 8px)` }}
+                    style={{ left: "-8px" }}
                   />
                 </div>
 

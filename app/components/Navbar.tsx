@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -17,7 +17,7 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const progressRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let ticking = false;
@@ -28,7 +28,9 @@ export default function Navbar() {
         setScrolled(window.scrollY > 40);
         const max = document.documentElement.scrollHeight - window.innerHeight;
         const rawProgress = max > 0 ? window.scrollY / max : 0;
-        setProgress(Math.max(0, Math.min(1, rawProgress)));
+        if (progressRef.current) {
+          progressRef.current.style.width = `${Math.max(0, Math.min(1, rawProgress)) * 100}%`;
+        }
         ticking = false;
       });
     };
@@ -129,11 +131,11 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Scroll progress indicator */}
       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-transparent">
         <div
-          className="h-full bg-gradient-to-r from-teal via-teal-light to-teal transition-[width] duration-75"
-          style={{ width: `${progress * 100}%` }}
+          ref={progressRef}
+          className="h-full bg-gradient-to-r from-teal via-teal-light to-teal"
+          style={{ width: "0%" }}
         />
       </div>
     </motion.nav>

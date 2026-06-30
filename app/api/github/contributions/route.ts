@@ -57,8 +57,25 @@ export async function GET() {
 
     allContributions.sort((a, b) => a.date.localeCompare(b.date));
 
-    const firstActive = allContributions.findIndex((c) => c.level > 0);
-    const trimmed = firstActive > 0 ? allContributions.slice(firstActive) : allContributions;
+    let trimmed = allContributions;
+    if (joinYear === 2023) {
+      const augPadding = [];
+      for (let i = 1; i <= 31; i++) {
+        const dateStr = `2023-08-${String(i).padStart(2, "0")}`;
+        if (!trimmed.some((c) => c.date === dateStr)) {
+          augPadding.push({ date: dateStr, level: 0 });
+        }
+      }
+      trimmed = [...augPadding, ...trimmed];
+      trimmed.sort((a, b) => a.date.localeCompare(b.date));
+      const augIndex = trimmed.findIndex((c) => c.date === "2023-08-01");
+      if (augIndex >= 0) {
+        trimmed = trimmed.slice(augIndex);
+      }
+    } else {
+      const firstActive = trimmed.findIndex((c) => c.level > 0);
+      trimmed = firstActive > 0 ? trimmed.slice(firstActive) : trimmed;
+    }
 
     return NextResponse.json({
       username: GITHUB_USER,
