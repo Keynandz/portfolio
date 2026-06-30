@@ -17,12 +17,33 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 40);
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        setProgress(max > 0 ? window.scrollY / max : 0);
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setOpen(false);
+    const target = document.querySelector(href);
+    if (target) {
+      const y = target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
 
   return (
     <motion.nav
@@ -50,6 +71,7 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => scrollToSection(e, link.href)}
               className="px-4 py-2 text-sm text-text-secondary hover:text-teal transition-colors rounded-lg hover:bg-teal/5"
             >
               {link.label}
@@ -57,6 +79,7 @@ export default function Navbar() {
           ))}
           <a
             href="#contact"
+            onClick={(e) => scrollToSection(e, "#contact")}
             className="ml-3 px-5 py-2 text-sm font-medium rounded-lg bg-teal text-bg hover:bg-teal-light transition-colors"
           >
             Let&apos;s Talk
@@ -87,7 +110,7 @@ export default function Navbar() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => scrollToSection(e, link.href)}
                   className="text-text-secondary hover:text-teal transition-colors py-2"
                 >
                   {link.label}
@@ -95,7 +118,7 @@ export default function Navbar() {
               ))}
               <a
                 href="#contact"
-                onClick={() => setOpen(false)}
+                onClick={(e) => scrollToSection(e, "#contact")}
                 className="mt-2 px-5 py-3 text-sm font-medium rounded-lg bg-teal text-bg text-center"
               >
                 Let&apos;s Talk
@@ -104,6 +127,14 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Scroll progress indicator */}
+      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-transparent">
+        <div
+          className="h-full bg-gradient-to-r from-teal via-teal-light to-teal transition-[width] duration-75"
+          style={{ width: `${progress * 100}%` }}
+        />
+      </div>
     </motion.nav>
   );
 }
