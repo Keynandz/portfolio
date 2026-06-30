@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, useInView } from "framer-motion";
 import { Briefcase, ChevronRight, ExternalLink, X } from "lucide-react";
 import Image from "next/image";
@@ -40,6 +40,7 @@ const milestones = [
     role: "Backend Engineer",
     company: "PT. Solu Filantropi Teknologi",
     type: "Internship",
+    certificate: "/projects/sertifikat-7.jpeg",
     highlights: [
       "Built microservice and monolith backend systems from scratch, owning the full cycle from ERD design to finished product",
       "Delivered comprehensive API documentation with Swagger and Postman, establishing the documentation standard adopted by the team",
@@ -168,6 +169,22 @@ export default function Experience() {
   const headerRef = useRef<HTMLDivElement>(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-80px" });
   const [showCertificate, setShowCertificate] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (showCertificate) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showCertificate]);
 
   return (
     <section id="experience" className="py-28 px-4 sm:px-6">
@@ -187,7 +204,7 @@ export default function Experience() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-3xl sm:text-4xl md:text-5xl heading-elegant text-text-primary"
           >
-            Where I&apos;ve Made Impact
+            Where I've Made Impact
           </motion.h2>
         </div>
 
@@ -207,34 +224,51 @@ export default function Experience() {
         </div>
       </div>
 
-      {showCertificate && (
+      {mounted && showCertificate && createPortal(
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-[9999] flex flex-col bg-black/95 backdrop-blur-md"
           onClick={() => setShowCertificate(null)}
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="relative max-w-4xl w-full"
-            onClick={(e) => e.stopPropagation()}
-          >
+          {/* Top bar: title + close */}
+          <div className="flex items-center justify-between px-4 sm:px-6 py-4 shrink-0">
+            <p className="text-sm sm:text-base font-medium text-text-primary line-clamp-1 pr-4">
+              Certificate
+            </p>
             <button
-              onClick={() => setShowCertificate(null)}
-              className="absolute -top-12 right-0 p-2 text-text-secondary hover:text-text-primary transition-colors"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowCertificate(null);
+              }}
+              className="p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-white/5 transition-colors shrink-0"
             >
               <X size={24} />
             </button>
-            <div className="rounded-2xl glass overflow-hidden border border-border">
-              <Image 
-                src={showCertificate} 
-                alt="Certificate" 
+          </div>
+
+          {/* Full-screen centered image — fits 1 laptop screen, no scroll */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="relative flex-1 min-h-0 flex items-center justify-center px-2 sm:px-4 pb-4"
+            onClick={() => setShowCertificate(null)}
+          >
+            <div 
+              className="relative w-full h-full max-w-5xl flex items-center justify-center"
+              onClick={() => setShowCertificate(null)}
+            >
+              <Image
+                src={showCertificate}
+                alt="Certificate"
                 width={1200}
                 height={800}
-                className="w-full h-auto object-cover"
+                className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg"
+                style={{ width: "auto", height: "100%" }}
+                onClick={(e) => e.stopPropagation()}
               />
             </div>
           </motion.div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );

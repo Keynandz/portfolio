@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, useInView } from "framer-motion";
 import { GraduationCap, Trophy, BookOpen, X, ExternalLink, ChevronLeft, ChevronRight, Star } from "lucide-react";
 import Image from "next/image";
@@ -66,6 +67,22 @@ export default function Education() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [activeAward, setActiveAward] = useState<{ title: string, images: string[] } | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (activeAward) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [activeAward]);
 
   return (
     <section id="education" ref={ref} className="py-28 px-6">
@@ -141,30 +158,40 @@ export default function Education() {
         </div>
       </div>
 
-      {activeAward && activeAward.images.length > 0 && (
+      {mounted && activeAward && activeAward.images.length > 0 && createPortal(
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-[9999] flex flex-col bg-black/95 backdrop-blur-md"
           onClick={() => setActiveAward(null)}
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="relative max-w-4xl w-full"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="flex items-center justify-between px-4 sm:px-6 py-4 shrink-0">
+            <p className="text-sm sm:text-base font-medium text-text-primary line-clamp-1 pr-4">
+              {activeAward.title}
+            </p>
             <button
               onClick={() => setActiveAward(null)}
-              className="absolute -top-12 right-0 p-2 text-text-secondary hover:text-text-primary transition-colors"
+              className="p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-white/5 transition-colors shrink-0"
             >
               <X size={24} />
             </button>
-            <div className="rounded-2xl glass overflow-hidden border border-border relative">
+          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="relative flex-1 min-h-0 flex items-center justify-center px-2 sm:px-4 pb-4"
+            onClick={() => setActiveAward(null)}
+          >
+            <div 
+              className="relative w-full h-full max-w-5xl flex items-center justify-center"
+              onClick={() => setActiveAward(null)}
+            >
               <Image 
                 src={activeAward.images[currentImageIndex]} 
                 alt={activeAward.title} 
                 width={1200}
                 height={800}
-                className="w-full h-auto object-cover"
+                className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg"
+                style={{ width: "auto", height: "100%" }}
+                onClick={(e) => e.stopPropagation()}
               />
               {activeAward.images.length > 1 && (
                 <>
@@ -203,11 +230,9 @@ export default function Education() {
                 </>
               )}
             </div>
-            <div className="absolute -bottom-10 left-0 right-0 text-center">
-              <p className="text-sm font-medium text-text-primary">{activeAward.title}</p>
-            </div>
           </motion.div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );
