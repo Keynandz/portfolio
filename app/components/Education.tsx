@@ -39,24 +39,24 @@ const education: EducationEntry[] = [
     awards: [
       {
         title: "3rd Winner of National Data Science Tournament 2023 (Student Category)",
-        image: "/projects/sertifikat-1.jpg",
+        image: "/certificate/sertifikat-1.jpg",
       },
       {
         title: "3rd Winner Short Movie Competition",
-        image: "/projects/sertifikat-2.jpg",
+        image: "/certificate/sertifikat-2.jpg",
       },
       {
         title: "1st Winner SIJA IT Club Competition (Website Development Category)",
-        image: "/projects/sertifikat-3.jpg",
+        image: "/certificate/sertifikat-3.jpg",
       },
       {
         title: "Top 20 Game Development Competition by KKSI",
-        images: ["/projects/sertifikat-4-1.jpg", "/projects/sertifikat-4-2.jpg"],
+        images: ["/certificate/sertifikat-4-1.jpg", "/projects/sertifikat-4-2.jpg"],
       },
       {
         title: "Siswa Penggerak Digitalisasi Sekolah by Smarteschool",
         icon: Star,
-        image: "/projects/sertifikat-5.jpg"
+        image: "/certificate/sertifikat-5.jpg"
       }
     ],
   },

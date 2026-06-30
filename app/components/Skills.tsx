@@ -138,7 +138,7 @@ export default function Skills() {
             </div>
             <div>
               <h3 className="text-text-primary font-semibold text-lg">Also Proficient In</h3>
-              <p className="text-text-muted text-sm">Practices & tools I use daily across projects</p>
+              <p className="text-text-secondary text-sm">Practices & tools I use daily across projects</p>
             </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">

@@ -27,7 +27,8 @@ export default function Navbar() {
       requestAnimationFrame(() => {
         setScrolled(window.scrollY > 40);
         const max = document.documentElement.scrollHeight - window.innerHeight;
-        setProgress(max > 0 ? window.scrollY / max : 0);
+        const rawProgress = max > 0 ? window.scrollY / max : 0;
+        setProgress(Math.max(0, Math.min(1, rawProgress)));
         ticking = false;
       });
     };
@@ -52,7 +53,7 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-bg/60 backdrop-blur-2xl border-b border-white/5 shadow-xl shadow-black/20"
+          ? "bg-bg/80 backdrop-blur-2xl shadow-xl shadow-black/20"
           : "bg-transparent"
       }`}
     >

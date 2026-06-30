@@ -40,7 +40,7 @@ const milestones = [
     role: "Backend Engineer",
     company: "PT. Solu Filantropi Teknologi",
     type: "Internship",
-    certificate: "/projects/sertifikat-7.jpeg",
+    certificate: "/certificate/sertifikat-7.jpeg",
     highlights: [
       "Built microservice and monolith backend systems from scratch, owning the full cycle from ERD design to finished product",
       "Delivered comprehensive API documentation with Swagger and Postman, establishing the documentation standard adopted by the team",
@@ -54,7 +54,7 @@ const milestones = [
     role: "Data Uploader",
     company: "PT. Petrolink",
     type: "Internship",
-    certificate: "/projects/sertifikat-6.jpg",
+    certificate: "/certificate/sertifikat-6.jpg",
     highlights: [
       "Conducted extensive data mining to extract corporate environmental metrics, including GHG emissions, Scope 1-3 CO2 footprints, and Net Zero targets",
       "Analyzed varied global sources such as ESG/CSR reports, Annual Greenhouse Gas Verification Reports, TCFD disclosures, and CDP Questionnaires",
@@ -114,9 +114,9 @@ function TimelineCard({
             </h3>
             <p className="text-teal text-sm font-medium mt-0.5">{milestone.company}</p>
             <div className="flex flex-wrap items-center gap-2 mt-2">
-              <span className="text-xs text-text-muted font-mono">{milestone.period}</span>
+              <span className="text-sm text-text-secondary font-mono">{milestone.period}</span>
               <span className="hidden sm:inline text-text-muted text-xs">&bull;</span>
-              <span className="text-[11px] px-2 py-0.5 rounded-full bg-teal/10 text-teal font-medium">
+              <span className="text-xs px-2 py-0.5 rounded-full bg-teal/10 text-teal font-medium">
                 {milestone.type}
               </span>
             </div>
