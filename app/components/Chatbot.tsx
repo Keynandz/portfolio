@@ -114,9 +114,9 @@ export default function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-6 right-6 z-50 w-[350px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-3rem)] flex flex-col rounded-2xl glass-strong border border-border shadow-2xl overflow-hidden"
+            className="fixed bottom-6 right-6 z-50 w-[350px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-3rem)] flex flex-col rounded-2xl glass-strong max-sm:!bg-surface max-sm:!backdrop-blur-none border border-border shadow-2xl overflow-hidden"
           >
-            <div className="flex items-center justify-between p-4 border-b border-border bg-bg/50">
+            <div className="flex items-center justify-between p-4 border-b border-border bg-surface">
               <div className="flex items-center gap-2">
                 <div className="p-1.5 rounded-lg bg-teal/20 text-teal">
                   <Sparkles size={16} />
@@ -170,7 +170,7 @@ export default function Chatbot() {
               <div ref={messagesEndRef} />
             </div>
 
-            <div className="p-4 border-t border-border bg-bg/50">
+            <div className="p-4 border-t border-border bg-surface">
               <p className="text-xs text-text-muted mb-2 px-1">Suggested questions:</p>
               <div className="flex flex-col gap-2">
                 {qaPairs.map((qa, i) => (

@@ -1,8 +1,10 @@
 "use client";
 
 import { useRef } from "react";
+import { useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Briefcase, ChevronRight } from "lucide-react";
+import { Briefcase, ChevronRight, ExternalLink, X } from "lucide-react";
+import Image from "next/image";
 
 const milestones = [
   {
@@ -46,14 +48,29 @@ const milestones = [
     ],
     tech: ["GOlang", "PHP", "JavaScript"],
   },
+  {
+    period: "Jun 2022 - Aug 2022",
+    role: "Data Uploader",
+    company: "PT. Petrolink",
+    type: "Internship",
+    certificate: "/projects/sertifikat-6.jpg",
+    highlights: [
+      "Conducted extensive data mining to extract corporate environmental metrics, including GHG emissions, Scope 1-3 CO2 footprints, and Net Zero targets",
+      "Analyzed varied global sources such as ESG/CSR reports, Annual Greenhouse Gas Verification Reports, TCFD disclosures, and CDP Questionnaires",
+      "Processed and inputted the gathered environmental sustainability data into the company's central database",
+    ],
+    tech: ["Data Research", "Database", "Data Entry"],
+  },
 ];
 
 function TimelineCard({
   milestone,
   isFirst,
+  onViewCertificate,
 }: {
-  milestone: (typeof milestones)[number];
+  milestone: (typeof milestones)[number] & { certificate?: string };
   isFirst: boolean;
+  onViewCertificate?: (cert: string) => void;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const inView = useInView(cardRef, { once: true, margin: "-80px" });
@@ -132,6 +149,15 @@ function TimelineCard({
               {t}
             </span>
           ))}
+          {milestone.certificate && onViewCertificate && (
+            <button
+              onClick={() => onViewCertificate(milestone.certificate!)}
+              className="flex items-center gap-1.5 px-3 py-1 text-[11px] font-mono rounded-md bg-teal/10 border border-teal/20 text-teal hover:bg-teal/20 transition-colors sm:ml-auto"
+            >
+              <ExternalLink size={12} />
+              View Certificate
+            </button>
+          )}
         </div>
       </motion.div>
     </div>
@@ -141,6 +167,7 @@ function TimelineCard({
 export default function Experience() {
   const headerRef = useRef<HTMLDivElement>(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-80px" });
+  const [showCertificate, setShowCertificate] = useState<string | null>(null);
 
   return (
     <section id="experience" className="py-28 px-4 sm:px-6">
@@ -173,11 +200,42 @@ export default function Experience() {
                 key={mIdx}
                 milestone={milestone}
                 isFirst={mIdx === 0}
+                onViewCertificate={setShowCertificate}
               />
             ))}
           </div>
         </div>
       </div>
+
+      {showCertificate && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          onClick={() => setShowCertificate(null)}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="relative max-w-4xl w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowCertificate(null)}
+              className="absolute -top-12 right-0 p-2 text-text-secondary hover:text-text-primary transition-colors"
+            >
+              <X size={24} />
+            </button>
+            <div className="rounded-2xl glass overflow-hidden border border-border">
+              <Image 
+                src={showCertificate} 
+                alt="Certificate" 
+                width={1200}
+                height={800}
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 }

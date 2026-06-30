@@ -185,6 +185,19 @@ export default function Projects() {
   const dragStartScroll = useRef(0);
   const lastTime = useRef<number | null>(null);
   const rafId = useRef(0);
+  const touchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleTouchStart = () => {
+    setHovering(true);
+    if (touchTimeoutRef.current) clearTimeout(touchTimeoutRef.current);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchTimeoutRef.current) clearTimeout(touchTimeoutRef.current);
+    touchTimeoutRef.current = setTimeout(() => {
+      setHovering(false);
+    }, 1500);
+  };
 
   useEffect(() => {
     const track = trackRef.current;
@@ -339,9 +352,9 @@ export default function Projects() {
               endDrag(e);
             }
           }}
-          onTouchStart={() => setHovering(true)}
-          onTouchEnd={() => setHovering(false)}
-          onTouchCancel={() => setHovering(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
         >
           <div ref={trackRef} className="flex gap-5 pb-4">
             {tripled.map((project, i) => (
