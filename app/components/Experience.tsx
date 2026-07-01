@@ -18,8 +18,9 @@ const milestones = [
       "Design and source custom IoT hardware solutions, evaluating components and building device specifications for production use",
       "Serve as technical backbone across all business units, providing backup engineering support and cross-functional problem solving",
       "Conduct reverse engineering on legacy systems to extract business logic and enable modernization efforts",
+      "Implement advanced event-driven systems using Kafka to handle high-throughput real-time data streams",
     ],
-    tech: ["GOlang", "Python", "Java", "JavaScript", "TypeScript", "Docker"],
+    tech: ["GOlang", "Python", "Java", "JavaScript", "TypeScript", "Docker", "Kafka"],
   },
   {
     period: "May 2024 - Jan 2025",

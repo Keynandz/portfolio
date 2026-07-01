@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Zap, Eye, Database, Network, Cpu, Activity } from "lucide-react";
+import { Zap, Eye, Database, Network, Cpu, BookOpen } from "lucide-react";
 
 const highlights = [
   {
@@ -36,10 +36,10 @@ const highlights = [
     tags: ["JWT", "OAuth 2.0", "Middleware"],
   },
   {
-    icon: Activity,
-    title: "Real-time Data Processing",
-    desc: "Implemented robust WebSocket-based services for instant data synchronization and real-time user notifications across distributed systems.",
-    tags: ["WebSocket", "Go", "Real-time"],
+    icon: BookOpen,
+    title: "43 R&D Guides",
+    desc: "Created 43 comprehensive documentation guides covering extensive research topics to facilitate and streamline future development efforts.",
+    tags: ["Documentation", "Research", "Knowledge Base"],
   },
 ];
 

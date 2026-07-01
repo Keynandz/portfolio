@@ -7,7 +7,7 @@ import { Code2, Server, Cpu, Shield } from "lucide-react";
 const stats = [
   { value: 15, suffix: "+", label: "Systems Built" },
   { value: 4302, suffix: "", label: "GitHub Commits" },
-  { value: 27, suffix: "", label: "Repos Contributed" },
+  { value: 43, suffix: "", label: "Research & Docs" },
   { value: 3, suffix: "yrs", label: "Experience" },
 ];
 
@@ -91,22 +91,22 @@ export default function About() {
             className="lg:col-span-3 space-y-5"
           >
             <p className="text-text-secondary text-base sm:text-lg leading-relaxed">
-              I don&apos;t just write code, I{" "}
-              <span className="text-text-primary font-medium">build complete systems</span>.
-              Every project I take on starts from a blank canvas: mapping entities,
-              designing schemas, choosing the right protocol, and building both APIs
-              and interfaces that people actually enjoy using.
+              At my core, I am a builder. I love taking a blank canvas and turning it into a{" "}
+              <span className="text-text-primary font-medium">living, breathing system</span>. 
+              While my comfort zone is building scalable backend architectures with Golang and PostgreSQL, 
+              my curiosity constantly pushes me to explore everything from AI vision models to IoT edge computing.
             </p>
             <p className="text-text-secondary text-base sm:text-lg leading-relaxed">
-              My core loop is{" "}
-              <span className="text-teal font-medium">Golang + Next.js + PostgreSQL + Docker</span>,
-              but I&apos;m equally comfortable training object detection models in
-              Python or wiring up MQTT sensors on an MiniPC.
+              What really motivates me? It is the thrill of continuous learning and building things that{" "}
+              <span className="text-teal font-medium">solve real-world problems</span>. Currently, I&apos;m diving deeper 
+              into event-driven architectures and finding new ways to bridge the gap between software and physical hardware. 
+              For me, it is not just about writing clean code, it is about the actual impact the product makes.
             </p>
             <p className="text-text-secondary text-base sm:text-lg leading-relaxed">
-              What drives me? Shipping things that{" "}
-              <span className="text-text-primary font-medium">actually run in production</span>{""},
-              not just passing code review.
+              Beyond the screen, I thrive in environments where ideas flow freely. I&apos;m looking for a team that values{" "}
+              <span className="text-text-primary font-medium">open communication, creative problem-solving, and a good sense of humor</span>. 
+              If your team enjoys geeking out over system architecture and experimenting with new tech, 
+              I would love to build something awesome together!
             </p>
 
             <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-8">

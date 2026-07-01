@@ -120,10 +120,11 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-text-secondary text-lg md:text-xl max-w-2xl leading-relaxed mb-10"
         >
-          I turn complex problems into{" "}
-          <span className="text-text-primary font-medium">elegant systems</span>.
-          From database architecture to production deployment, I build it all,
-          with <span className="text-teal">Golang + Javascript & AI</span> as my weapon of choice.
+          Building scalable, high-performance software systems powered by{" "}
+          <span className="text-teal font-medium">Golang, JavaScript, and AI</span>. 
+          Turning complex ideas into reliable,{" "}
+          <span className="text-text-primary font-medium">production-ready digital products</span>{" "}
+          with a focus on performance, maintainability, and user experience.
         </motion.p>
 
         <motion.div
