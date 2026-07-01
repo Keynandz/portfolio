@@ -56,7 +56,7 @@ const categories = [
   {
     label: "System Architecture",
     color: "amber",
-    items: ["Microservices", "RESTful APIs", "MQTT Protocol", "Event-Driven"],
+    items: ["Microservices", "RESTful APIs", "MQTT Protocol", "Event-Driven", "Kafka"],
   },
 ];
 

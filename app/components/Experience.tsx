@@ -28,12 +28,13 @@ const milestones = [
     type: "Full-time",
     highlights: [
       "Authored the internal backend coding standards and project structure guidelines, adopted company-wide to unify code readability across teams",
-      "Contributed to 45+ repositories building both microservice and monolith architectures from ERD design to production-ready systems",
+      "Contributed to 20+ repositories building both microservice and monolith architectures from ERD design to production-ready systems",
       "Assisted frontend team with logic corrections and debugging, improving cross-team collaboration and reducing integration friction",
       "Supported IoT device development, bridging hardware and software layers for real-time data communication via MQTT",
       "Designed and implemented database schemas, caching strategies with Redis, and containerized deployments using Docker",
+      "Implemented Kafka as a message broker for event streaming and reliable communication within project services",
     ],
-    tech: ["GOlang", "Python", "Java", "JavaScript", "Docker"],
+    tech: ["GOlang", "Python", "Java", "JavaScript", "Docker", "Kafka"],
   },
   {
     period: "Jul 2023 - May 2024",
