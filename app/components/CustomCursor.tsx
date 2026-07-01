@@ -12,6 +12,7 @@ export default function CustomCursor() {
   const currentScale = useRef(1);
   const isHovering = useRef(false);
   const visibleRef = useRef(false);
+  const isGrabbingScrollbar = useRef(false);
 
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
@@ -31,7 +32,7 @@ export default function CustomCursor() {
       );
       isHovering.current = !!isClickable;
 
-      if (!visibleRef.current) {
+      if (!visibleRef.current && !isGrabbingScrollbar.current) {
         visibleRef.current = true;
         setVisible(true);
       }
@@ -77,28 +78,26 @@ export default function CustomCursor() {
 
     const onPointerDown = (e: PointerEvent | MouseEvent) => {
       if (e.clientX >= document.documentElement.clientWidth) {
-        visibleRef.current = false;
-        setVisible(false);
+        isGrabbingScrollbar.current = true;
+        if (visibleRef.current) {
+          visibleRef.current = false;
+          setVisible(false);
+        }
       }
     };
 
-    const onScroll = () => {
-      // Hide cursor during scroll (wheel or scrollbar drag).
-      // It will reappear instantly on the next pointermove.
-      if (visibleRef.current) {
-        visibleRef.current = false;
-        setVisible(false);
-      }
+    const onPointerUp = () => {
+      isGrabbingScrollbar.current = false;
     };
 
     window.addEventListener("pointerdown", onPointerDown);
-    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("pointerup", onPointerUp);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerdown", onPointerDown);
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("pointerup", onPointerUp);
       document.removeEventListener("mouseenter", onEnter);
       document.removeEventListener("mouseleave", onLeave);
     };

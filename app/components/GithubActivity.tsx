@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import { motion, useInView } from "framer-motion";
-import { Activity } from "lucide-react";
+import { Activity, ExternalLink } from "lucide-react";
 
 interface DayCell {
   date: string;
@@ -16,6 +16,7 @@ interface GithubData {
   years: number[];
   yearTotals: Record<number, number>;
   contributions: DayCell[];
+  available?: boolean;
 }
 
 const LEVEL_COLORS = ["#161b22", "#064e3b", "#047857", "#10b981", "#00d4aa"];
@@ -89,6 +90,7 @@ export default function GithubActivity() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [data, setData] = useState<GithubData | null>(null);
+  const [error, setError] = useState(false);
   const [hovered, setHovered] = useState<DayCell | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const progressLineRef = useRef<HTMLDivElement>(null);
@@ -99,10 +101,23 @@ export default function GithubActivity() {
   const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
     fetch("/api/github/contributions")
       .then((r) => r.json())
-      .then((d) => setData(d))
-      .catch(() => {});
+      .then((d) => {
+        if (cancelled) return;
+        if (d && d.available === false) {
+          setError(true);
+        } else {
+          setData(d);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setError(true);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const { weeks, monthLabels, yearLabels } = useMemo(() => {
@@ -206,7 +221,9 @@ export default function GithubActivity() {
           <p className="text-text-secondary mt-3 max-w-lg">
             {data
               ? `${grandTotal.toLocaleString()} total contributions since ${data.joinYear}.`
-              : "Loading contribution data..."}
+              : error
+                ? "Contribution data is temporarily unavailable. Visit my GitHub profile directly."
+                : "Loading contribution data..."}
           </p>
         </motion.div>
 
@@ -379,6 +396,72 @@ export default function GithubActivity() {
                   <span className="text-[10px] text-text-secondary font-mono">More</span>
                 </div>
               </div>
+            </div>
+          </motion.div>
+        )}
+
+        {!data && !error && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="rounded-2xl glass-strong overflow-hidden"
+          >
+            <div className="flex items-center gap-3 px-6 py-4 border-b border-border">
+              <Activity size={16} className="text-teal shrink-0" />
+              <span className="text-sm font-medium text-text-primary">
+                Contribution History
+              </span>
+              <div className="flex gap-3 ml-auto">
+                {[0, 1, 2].map((i) => (
+                  <div key={i} className="h-3 w-10 rounded bg-white/5 animate-pulse" />
+                ))}
+              </div>
+            </div>
+            <div className="p-4 sm:p-6">
+              <div className="grid grid-flow-col grid-rows-7 gap-[2px] w-fit">
+                {Array.from({ length: 210 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-[11px] h-[11px] rounded-[2px] bg-white/5 animate-pulse"
+                    style={{ animationDelay: `${(i % 50) * 30}ms` }}
+                  />
+                ))}
+              </div>
+              <div className="mt-6 h-5 rounded-full bg-white/5 animate-pulse" />
+            </div>
+          </motion.div>
+        )}
+
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="rounded-2xl glass-strong overflow-hidden"
+          >
+            <div className="flex flex-col items-center text-center gap-4 px-6 py-12">
+              <div className="p-3 rounded-xl bg-teal/10 text-teal">
+                <Activity size={22} />
+              </div>
+              <div>
+                <p className="text-text-primary font-semibold">
+                  Contribution data unavailable
+                </p>
+                <p className="text-text-secondary text-sm mt-1 max-w-sm">
+                  The GitHub contribution feed could not be reached right now.
+                  You can view my full activity directly on GitHub.
+                </p>
+              </div>
+              <a
+                href="https://github.com/Keynandz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-5 py-2.5 bg-teal text-bg text-sm font-semibold rounded-lg hover:bg-teal-light transition-colors glow-teal-sm"
+              >
+                View on GitHub
+                <ExternalLink size={14} />
+              </a>
             </div>
           </motion.div>
         )}

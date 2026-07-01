@@ -51,7 +51,7 @@ const categories = [
   {
     label: "AI & Edge Hardware",
     color: "pink",
-    items: ["YOLOv5", "LLM Integration", "OrangePi", "Firefly MiniPC", "Frigate NVR"],
+    items: ["YOLOv5", "LLM Integration", "RAG", "OrangePi", "Firefly MiniPC", "Frigate NVR"],
   },
   {
     label: "System Architecture",

@@ -2,11 +2,21 @@ import { NextResponse } from "next/server";
 
 const GITHUB_USER = "Keynandz";
 
+const SUCCESS_CACHE = "public, s-maxage=3600, stale-while-revalidate=86400";
+const FAIL_CACHE = "no-store";
+
+function unavailable() {
+  return NextResponse.json(
+    { username: GITHUB_USER, available: false },
+    { status: 200, headers: { "Cache-Control": FAIL_CACHE } }
+  );
+}
+
 export async function GET() {
   try {
     const userRes = await fetch(`https://api.github.com/users/${GITHUB_USER}`);
     if (!userRes.ok) {
-      return NextResponse.json({ error: "Failed to fetch user data" }, { status: 500 });
+      return unavailable();
     }
     const userData = await userRes.json();
     const joinDate = new Date(userData.created_at);
@@ -77,15 +87,23 @@ export async function GET() {
       trimmed = firstActive > 0 ? trimmed.slice(firstActive) : trimmed;
     }
 
-    return NextResponse.json({
-      username: GITHUB_USER,
-      joinYear,
-      currentYear,
-      years,
-      yearTotals,
-      contributions: trimmed || [],
-    });
+    if (!trimmed || trimmed.length === 0) {
+      return unavailable();
+    }
+
+    return NextResponse.json(
+      {
+        username: GITHUB_USER,
+        joinYear,
+        currentYear,
+        years,
+        yearTotals,
+        contributions: trimmed,
+        available: true,
+      },
+      { headers: { "Cache-Control": SUCCESS_CACHE } }
+    );
   } catch {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return unavailable();
   }
 }

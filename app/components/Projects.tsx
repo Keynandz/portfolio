@@ -10,7 +10,7 @@ const projects = [
     title: "G4S Super App",
     desc: "Architected and built a scalable microservices-based super app from scratch serving thousands of G4S users. Engineered the complete backend architecture featuring complex PostgreSQL schemas, real-time WebSocket communication, secure OAuth 2.0 authentication, and automated data pipelines.",
     tech: ["GO", "GORM", "PostgreSQL", "Firebase", "GOPDF", "Cron", "MinIO", "WebSocket", "Docker", "Oauth 2.0", "JWT"],
-    image: "/projects/project-1-slide2.jpeg",
+    image: "/projects/project-1.jpeg",
     liveDemo: "https://gracia.g4sindonesia.com",
     sourceCode: "",
     documentUrl: "",
@@ -313,7 +313,7 @@ export default function Projects() {
   const multiplied = useMemo(() => Array(7).fill(projects).flat(), []);
 
   return (
-    <section id="projects" ref={sectionRef} className="py-20">
+    <section id="projects" ref={sectionRef} className="py-20 bg-bg-secondary/50">
       <div className="max-w-6xl mx-auto px-6 mb-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

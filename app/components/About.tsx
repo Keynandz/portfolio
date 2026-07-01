@@ -6,7 +6,7 @@ import { Code2, Server, Cpu, Shield } from "lucide-react";
 
 const stats = [
   { value: 15, suffix: "+", label: "Systems Built" },
-  { value: 4302, suffix: "", label: "GitHub Commits" },
+  { value: 4302, suffix: "", label: "GitHub Contributions" },
   { value: 43, suffix: "", label: "Research & Docs" },
   { value: 3, suffix: "yrs", label: "Experience" },
 ];

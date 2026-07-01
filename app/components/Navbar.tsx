@@ -6,11 +6,12 @@ import { Menu, X } from "lucide-react";
 
 const links = [
   { href: "#about", label: "About" },
+  { href: "#skills", label: "Skills" },
+  { href: "#experience", label: "Experience" },
   { href: "#projects", label: "Projects" },
   { href: "#activity", label: "Activity" },
-  { href: "#skills", label: "Tech Stack" },
-  { href: "#experience", label: "Journey" },
   { href: "#highlights", label: "Highlights" },
+  { href: "#education", label: "Education" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -69,7 +70,7 @@ export default function Navbar() {
           </span>
         </a>
 
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-1">
           {links.map((link) => (
             <a
               key={link.href}
@@ -91,7 +92,7 @@ export default function Navbar() {
 
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden text-text-secondary hover:text-teal transition-colors"
+          className="lg:hidden text-text-secondary hover:text-teal transition-colors"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -103,7 +104,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-bg/95 backdrop-blur-2xl border-b border-border overflow-hidden"
+            className="lg:hidden bg-bg/95 backdrop-blur-2xl border-b border-border overflow-hidden"
           >
             <div className="px-6 py-6 flex flex-col gap-3">
               {links.map((link, i) => (
