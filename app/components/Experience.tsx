@@ -143,21 +143,23 @@ function TimelineCard({
           ))}
         </div>
 
-        <div className="flex flex-wrap gap-2 mt-5">
-          {milestone.tech.map((t) => (
-            <span
-              key={t}
-              className="px-2.5 py-1 text-[11px] font-mono rounded-md bg-teal/5 border border-teal/10 text-teal"
-            >
-              {t}
-            </span>
-          ))}
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-2 mt-5 sm:items-start">
+          <div className="flex flex-wrap gap-2">
+            {milestone.tech.map((t) => (
+              <span
+                key={t}
+                className="px-2.5 py-1 text-[11px] font-mono rounded-md bg-teal/5 border border-teal/10 text-teal"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
           {milestone.certificate && onViewCertificate && (
             <button
               onClick={() => onViewCertificate(milestone.certificate!)}
-              className="flex items-center gap-1.5 px-3 py-1 text-[11px] font-mono rounded-md bg-teal/10 border border-teal/20 text-teal hover:bg-teal/20 transition-colors sm:ml-auto"
+              className="group flex items-center justify-center w-full sm:w-auto gap-1.5 px-4 py-2 text-xs bg-teal text-bg font-semibold rounded-lg hover:bg-teal-light transition-all duration-200 glow-teal-sm hover:glow-teal sm:ml-auto shrink-0"
             >
-              <ExternalLink size={12} />
+              <ExternalLink size={14} className="group-hover:translate-x-0.5 transition-transform" />
               View Certificate
             </button>
           )}
