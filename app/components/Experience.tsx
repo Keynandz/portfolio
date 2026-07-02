@@ -5,6 +5,8 @@ import { createPortal } from "react-dom";
 import { motion, useInView } from "framer-motion";
 import { Briefcase, ChevronRight, ExternalLink, X } from "lucide-react";
 import Image from "next/image";
+import TiltCard from "./TiltCard";
+import RevealText from "./RevealText";
 
 const milestones = [
   {
@@ -98,75 +100,79 @@ function TimelineCard({
         initial={{ opacity: 0, x: -30 }}
         animate={inView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`rounded-2xl p-5 sm:p-7 transition-all duration-300 ${
-          isFirst
-            ? "glass-strong border-teal/20 glow-teal-sm"
-            : "glass hover:border-teal/15"
-        }`}
+        className="w-full h-full"
       >
-        <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-5">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.4, delay: 0.15 }}
-            className="p-2.5 rounded-xl bg-teal/10 text-teal shrink-0 w-fit"
-          >
-            <Briefcase size={20} />
-          </motion.div>
-          <div className="flex-1 min-w-0">
-            <h3 className="text-lg sm:text-xl font-bold text-text-primary leading-tight">
-              {milestone.role}
-            </h3>
-            <p className="text-teal text-sm font-medium mt-0.5">{milestone.company}</p>
-            <div className="flex flex-wrap items-center gap-2 mt-2">
-              <span className="text-sm text-text-secondary font-mono">{milestone.period}</span>
-              <span className="hidden sm:inline text-text-muted text-xs">&bull;</span>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-teal/10 text-teal font-medium">
-                {milestone.type}
-              </span>
+        <TiltCard
+          className={`rounded-2xl p-5 sm:p-7 transition-all duration-300 ${
+            isFirst
+              ? "glass-strong border-teal/20 glow-teal-sm"
+              : "glass hover:border-teal/15"
+          }`}
+        >
+          <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-5">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={inView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.4, delay: 0.15 }}
+              className="p-2.5 rounded-xl bg-teal/10 text-teal shrink-0 w-fit"
+            >
+              <Briefcase size={20} />
+            </motion.div>
+            <div className="flex-1 min-w-0">
+              <h3 className="text-lg sm:text-xl font-bold text-text-primary leading-tight">
+                {milestone.role}
+              </h3>
+              <p className="text-teal text-sm font-medium mt-0.5">{milestone.company}</p>
+              <div className="flex flex-wrap items-center gap-2 mt-2">
+                <span className="text-sm text-text-secondary font-mono">{milestone.period}</span>
+                <span className="hidden sm:inline text-text-muted text-xs">&bull;</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-teal/10 text-teal font-medium">
+                  {milestone.type}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="space-y-2.5">
-          {milestone.highlights.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -12 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.4, delay: 0.25 + i * 0.08 }}
-              className="flex items-start gap-2.5 group"
-            >
-              <ChevronRight
-                size={14}
-                className="text-teal/60 mt-0.5 shrink-0 group-hover:text-teal group-hover:translate-x-0.5 transition-all"
-              />
-              <p className="text-text-secondary text-sm leading-relaxed">{item}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-2 mt-5 sm:items-start">
-          <div className="flex flex-wrap gap-2">
-            {milestone.tech.map((t) => (
-              <span
-                key={t}
-                className="px-2.5 py-1 text-[11px] font-mono rounded-md bg-teal/5 border border-teal/10 text-teal"
+          <div className="space-y-2.5">
+            {milestone.highlights.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -12 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.4, delay: 0.25 + i * 0.08 }}
+                className="flex items-start gap-2.5 group"
               >
-                {t}
-              </span>
+                <ChevronRight
+                  size={14}
+                  className="text-teal/60 mt-0.5 shrink-0 group-hover:text-teal group-hover:translate-x-0.5 transition-all"
+                />
+                <p className="text-text-secondary text-sm leading-relaxed">{item}</p>
+              </motion.div>
             ))}
           </div>
-          {milestone.certificate && onViewCertificate && (
-            <button
-              onClick={() => onViewCertificate(milestone.certificate!)}
-              className="group flex items-center justify-center w-full sm:w-auto gap-1.5 px-4 py-2 text-xs bg-teal text-bg font-semibold rounded-lg hover:bg-teal-light transition-all duration-200 glow-teal-sm hover:glow-teal sm:ml-auto shrink-0"
-            >
-              <ExternalLink size={14} className="group-hover:translate-x-0.5 transition-transform" />
-              View Certificate
-            </button>
-          )}
-        </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-2 mt-5 sm:items-start">
+            <div className="flex flex-wrap gap-2">
+              {milestone.tech.map((t) => (
+                <span
+                  key={t}
+                  className="px-2.5 py-1 text-[11px] font-mono rounded-md bg-teal/5 border border-teal/10 text-teal"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+            {milestone.certificate && onViewCertificate && (
+              <button
+                onClick={() => onViewCertificate(milestone.certificate!)}
+                className="group flex items-center justify-center w-full sm:w-auto gap-1.5 px-4 py-2 text-xs bg-teal text-bg font-semibold rounded-lg hover:bg-teal-light transition-all duration-200 glow-teal-sm hover:glow-teal sm:ml-auto shrink-0"
+              >
+                <ExternalLink size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                View Certificate
+              </button>
+            )}
+          </div>
+        </TiltCard>
       </motion.div>
     </div>
   );
@@ -205,14 +211,10 @@ export default function Experience() {
           >
             // career path
           </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl heading-elegant text-text-primary"
-          >
-            Where I've Made Impact
-          </motion.h2>
+          <RevealText 
+            text="Where I've Made Impact" 
+            className="text-3xl sm:text-4xl md:text-5xl heading-elegant text-text-primary" 
+          />
         </div>
 
         <div className="relative">

@@ -3,6 +3,10 @@
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, MapPin, Mail, ExternalLink } from "lucide-react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 const roles = [
   "Software Engineer",
@@ -57,6 +61,39 @@ function useTypingAnimation(texts: string[], typingSpeed = 80, pauseDuration = 2
 export default function Hero() {
   const typedText = useTypingAnimation(roles);
   const ref = useRef<HTMLElement>(null);
+  const bgRef1 = useRef<HTMLDivElement>(null);
+  const bgRef2 = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const { clientX, clientY } = e;
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      
+      const x1 = (clientX - centerX) * 0.05;
+      const y1 = (clientY - centerY) * 0.05;
+      
+      const x2 = (clientX - centerX) * -0.03;
+      const y2 = (clientY - centerY) * -0.03;
+
+      gsap.to(bgRef1.current, {
+        x: x1,
+        y: y1,
+        duration: 1,
+        ease: "power2.out"
+      });
+
+      gsap.to(bgRef2.current, {
+        x: x2,
+        y: y2,
+        duration: 1,
+        ease: "power2.out"
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, { scope: ref });
 
   return (
     <section
@@ -65,15 +102,19 @@ export default function Hero() {
     >
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
-          animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          animate={{ scale: [1, 1.05, 1], opacity: [0.5, 0.8, 0.5] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-[15%] left-[20%] w-[500px] h-[500px] bg-teal/5 rounded-full blur-[120px]"
-        />
+        >
+          <div ref={bgRef1} className="w-full h-full bg-teal/10 rounded-full" />
+        </motion.div>
         <motion.div
-          animate={{ x: [0, -20, 0], y: [0, 30, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
           className="absolute bottom-[20%] right-[15%] w-[400px] h-[400px] bg-teal/3 rounded-full blur-[100px]"
-        />
+        >
+          <div ref={bgRef2} className="w-full h-full bg-teal/5 rounded-full" />
+        </motion.div>
       </div>
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-32">

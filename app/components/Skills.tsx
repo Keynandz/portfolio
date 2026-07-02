@@ -16,6 +16,8 @@ import {
   Cpu,
   Lock,
 } from "lucide-react";
+import TiltCard from "./TiltCard";
+import RevealText from "./RevealText";
 
 const categories = [
   {
@@ -85,9 +87,10 @@ export default function Skills() {
           className="mb-16"
         >
           <p className="text-teal font-mono text-sm mb-2">// tech stack</p>
-          <h2 className="text-3xl md:text-5xl heading-elegant text-text-primary">
-            Tools of the Trade
-          </h2>
+          <RevealText 
+            text="Tools of the Trade" 
+            className="text-3xl md:text-5xl heading-elegant text-text-primary" 
+          />
           <p className="text-text-secondary mt-3 max-w-lg">
             Everything I reach for when building systems that need to be fast,
             reliable, and maintainable.
@@ -103,24 +106,26 @@ export default function Skills() {
                 initial={{ opacity: 0, y: 25 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: catIdx * 0.06 }}
-                className={`group p-6 rounded-xl glass hover:border-teal/20 transition-all duration-300 hover:shadow-lg ${c.glow}`}
+                className="w-full h-full"
               >
-                <div className="flex items-center gap-2 mb-4">
-                  <span className={`w-2 h-2 rounded-full ${c.bg}`} />
-                  <h3 className={`text-sm font-semibold ${c.text}`}>
-                    {cat.label}
-                  </h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {cat.items.map((item) => (
-                    <span
-                      key={item}
-                      className={`px-3 py-1.5 text-xs rounded-lg bg-bg border ${c.border} text-text-secondary group-hover:text-text-primary transition-colors`}
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
+                <TiltCard className={`h-full group p-6 rounded-xl glass hover:border-teal/20 transition-all duration-300 hover:shadow-lg ${c.glow}`}>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className={`w-2 h-2 rounded-full ${c.bg}`} />
+                    <h3 className={`text-sm font-semibold ${c.text}`}>
+                      {cat.label}
+                    </h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {cat.items.map((item) => (
+                      <span
+                        key={item}
+                        className={`px-3 py-1.5 text-xs rounded-lg bg-bg border ${c.border} text-text-secondary group-hover:text-text-primary transition-colors`}
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </TiltCard>
               </motion.div>
             );
           })}

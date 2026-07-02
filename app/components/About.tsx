@@ -3,6 +3,8 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Code2, Server, Cpu, Shield } from "lucide-react";
+import TiltCard from "./TiltCard";
+import RevealText from "./RevealText";
 
 const stats = [
   { value: 15, suffix: "+", label: "Systems Built" },
@@ -78,9 +80,10 @@ export default function About() {
           className="mb-16"
         >
           <p className="text-teal font-mono text-sm mb-2">// about me</p>
-          <h2 className="text-3xl md:text-5xl heading-elegant text-text-primary">
-            The Engineer Behind the Code
-          </h2>
+          <RevealText 
+            text="The Engineer Behind the Code" 
+            className="text-3xl md:text-5xl heading-elegant text-text-primary" 
+          />
         </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
@@ -139,21 +142,23 @@ export default function About() {
                 initial={{ opacity: 0, y: 15 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-                className="group p-5 rounded-xl glass hover:border-teal/30 transition-all duration-300"
+                className="w-full"
               >
-                <div className="flex items-start gap-4">
-                  <div className="p-2.5 rounded-lg bg-teal/10 text-teal shrink-0 group-hover:bg-teal/20 transition-colors">
-                    <pillar.icon size={20} />
+                <TiltCard className="group p-5 rounded-xl glass hover:border-teal/30 transition-all duration-300 relative">
+                  <div className="flex items-start gap-4">
+                    <div className="p-2.5 rounded-lg bg-teal/10 text-teal shrink-0 group-hover:bg-teal/20 transition-colors">
+                      <pillar.icon size={20} />
+                    </div>
+                    <div>
+                      <h3 className="text-text-primary font-semibold mb-1">
+                        {pillar.title}
+                      </h3>
+                      <p className="text-sm text-text-secondary leading-relaxed">
+                        {pillar.desc}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-text-primary font-semibold mb-1">
-                      {pillar.title}
-                    </h3>
-                    <p className="text-sm text-text-secondary leading-relaxed">
-                      {pillar.desc}
-                    </p>
-                  </div>
-                </div>
+                </TiltCard>
               </motion.div>
             ))}
           </motion.div>
