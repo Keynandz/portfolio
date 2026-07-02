@@ -22,7 +22,7 @@ export default function Home() {
         <About />
         <Skills />
         <Experience />
-        <Projects />
+        {false && <Projects />}
         <GithubActivity />
         <Highlights />
         <Education />

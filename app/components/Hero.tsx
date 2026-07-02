@@ -134,10 +134,10 @@ export default function Hero() {
           className="flex flex-wrap gap-4 mb-14"
         >
           <a
-            href="#projects"
+            href="#experience"
             className="group px-7 py-3.5 bg-teal text-bg font-semibold rounded-lg hover:bg-teal-light transition-all duration-200 flex items-center gap-2 glow-teal-sm hover:glow-teal"
           >
-            Explore My Work
+            Where I've Made Impact
             <ExternalLink size={16} className="group-hover:translate-x-0.5 transition-transform" />
           </a>
           <a
