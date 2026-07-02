@@ -32,7 +32,7 @@ const highlights = [
   {
     icon: Cpu,
     title: "Reusable Auth Framework",
-    desc: "Built modular JWT + OAuth 2.0 middleware adopted as the standard authentication layer across all company projects.",
+    desc: "Engineered a highly secure, modular JWT and OAuth 2.0 middleware. This robust framework was adopted as the standard authentication layer across all enterprise projects.",
     tags: ["JWT", "OAuth 2.0", "Middleware"],
   },
   {
